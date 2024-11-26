@@ -8,6 +8,7 @@ export interface Pelicula {
     imagen: string;
     anchoImagen: number;
     altoImagen: number;
+    enCartel : boolean;
 }
 
 

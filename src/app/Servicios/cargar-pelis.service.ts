@@ -9,7 +9,7 @@ import { Cartelera } from '../mis-interfaces/cartelera';
 })
 export class CargarPelisService {
 
-  private jsonUrl = '/assets/movies-2020s.json'; //Url para cargar el json de las películas. Habrá que sustituirlo por url api.
+  private jsonUrl = '/assets/movies-2020s-con-enCartel.json'; //Url para cargar el json de las películas. Habrá que sustituirlo por url api.
   private jsonUrlCartelera = 'assets/pelis.json'; // Ruta al archivo JSON
   public movies: Cartelera[] = [];
   private tituloPeliculaSeleccionada: string = '';

@@ -37,7 +37,7 @@ export class ModalPage{
   }
   abrirGeolocalizacion(titulo : String) {
     this.carga.setTituloPeliculaSeleccionada(this.pelicula.titulo);
-    this.router.navigate(['/tabs/tab3']); 
+    this.router.navigate(['/tabs/cines-cercanos']); 
     this.modalController.dismiss(); 
   }
 

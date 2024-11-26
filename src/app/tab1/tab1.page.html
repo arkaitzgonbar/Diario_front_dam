@@ -29,7 +29,7 @@
     <ion-button color="primary" (click)="filtrar()">Buscar</ion-button>
   </div>
 
-  <!-- Grid de películas -->
+  <!-- Grid de películas 
   <div class="movies-grid">
     <ion-card *ngFor="let pelicula of peliculasFiltradas" (click)="abrirModal(pelicula)">
       <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
@@ -37,5 +37,16 @@
         <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
       </ion-card-header>
     </ion-card>
+  </div>-->
+  <div class="movies-grid">
+    <ion-card *ngFor="let pelicula of peliculasFiltradas" 
+              (click)="abrirModal(pelicula)" 
+              [ngClass]="{'en-cartelera': pelicula.enCartel}">
+      <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
+      <ion-card-header>
+        <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
+
 </ion-content>

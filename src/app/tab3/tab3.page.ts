@@ -27,7 +27,6 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   cines: any[] = []; // Almacena la lista de cines 
   public movies: Cartelera[] = []; // Array donde almacenaremos las películas
   public movieTitles: string[] = []; // Array donde almacenaremos los títulos de las películas
-  //public selectedMovieTitle: string = 'Todas'; // Por defecto, la opción será "Todas"
   selectedMovieTitle: string = '';
 
   // Configuración del mapa
@@ -40,13 +39,15 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.loadMovies(); //método para cargar las peliculas y sus cines
     this.selectedMovieTitle = this.carga.getTituloPeliculaSeleccionada();
-
     console.log( "pelicula seleccionada"+ this.selectedMovieTitle);
   }
 
   ionViewWillEnter(): void {
     // reseteamos valores
-    this.selectedMovieTitle = '';
+    this.selectedMovieTitle = this.carga.getTituloPeliculaSeleccionada();
+    if (!this.movieTitles.includes(this.selectedMovieTitle)) {
+      this.movieTitles.push(this.selectedMovieTitle);
+    }
     this.selectedMunicipio = '';
     this.selectedDistancia = undefined!;
     this.cines = [];
@@ -78,9 +79,10 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
 
   ionViewWillLeave(): void {
     this.ngOnDestroy(); 
+    
   }
   ngOnDestroy(): void {
-    if (this.map) {
+   if (this.map) {
       this.map.remove();
       this.map = undefined!; 
     }
@@ -89,6 +91,7 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
     if (mapContainer) {
       mapContainer.innerHTML = ''; 
     }
+    this.carga.setTituloPeliculaSeleccionada("");
   }
 
   
@@ -154,98 +157,105 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
    
    //Añade marcadores para cada cine encontrado en el mapa.
    
-    updateCineMarkers(): void {
-       
-      // Limpiar los marcadores existentes en el mapa solo si es necesario
-    this.map.eachLayer(layer => {
-    if (layer instanceof L.Marker && !this.layers.includes(layer)) {
-      this.map.removeLayer(layer); // Solo eliminar los marcadores que no están en la lista de la capa
-    }
-  });
-  
-      let filteredCines = this.cines;
+   updateCineMarkers(): void {
+    // Verifica si la película seleccionada está en la lista de películas
+    const selectedMovie = this.movies.find(movie => movie.pelicula === this.selectedMovieTitle);
 
-    // Si no se selecciona "Todas", filtrar los cines por la película seleccionada
+    if (!selectedMovie) {
+        // Si la película no está en la lista, mostrar un mensaje y no pintar los cines
+        alert('La película seleccionada no está en cartelera.');
+        this.clearMarkers(); // Limpiar marcadores en el mapa si la película no existe
+        return; // No continuar con el resto de la ejecución
+    }
+
+    // Si la película está en cartelera, entonces filtrar y pintar los cines
+    let filteredCines = this.cines;
+
+    // Filtrar los cines según la película seleccionada
     if (this.selectedMovieTitle !== '') {
-      const selectedMovie = this.movies.find(movie => movie.pelicula === this.selectedMovieTitle);
-      if (selectedMovie) {
-        // Filtrar los cines por las coordenadas de la película seleccionada
         filteredCines = this.cines.filter(cine => {
-          return selectedMovie.cines.some(cinema => {
-            return cinema.lat === cine.lat && cinema.lon === cine.lon;
-          });
+            return selectedMovie.cines.some(cinema => {
+                return cinema.lat === cine.lat && cinema.lon === cine.lon;
+            });
         });
-      }
     }
 
-      // Verificamos si hay cines disponibles
-      if (filteredCines.length > 0) {
-          let cineLat: number;
-          let cineLon: number;
-  
-          // Inicializamos los límites con las coordenadas del primer cine
-          const firstCine = filteredCines[0];
-  
-          // Dependiendo del tipo de elemento, extraemos las coordenadas
-          if (firstCine.type === 'node') {
-              cineLat = firstCine.lat;
-              cineLon = firstCine.lon;
-          } else if (firstCine.type === 'way' || firstCine.type === 'relation') {
-              cineLat = firstCine.center.lat;
-              cineLon = firstCine.center.lon;
-          } else {
-              return; // Salir si el tipo de cine es desconocido
-          }
-  
-          // Inicializamos los límites con las coordenadas del primer cine
-        
-          const bounds = new LatLngBounds([cineLat, cineLon], [cineLat, cineLon]); // Usa coordenadas del primer cine, si no da error
-  
-          // Añadir marcador para el primer cine
-          const cineMarker = marker([cineLat, cineLon], {
-              icon: icon({
-                  iconSize: [25, 41],
-                  iconAnchor: [13, 41],
-                  iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
-                  shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador
-              })
-          }).bindPopup(firstCine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
-  
-          cineMarker.addTo(this.map); // Añadir el marcador al mapa
-  
-          // Iterar sobre los cines y agregar marcadores
-          filteredCines.forEach(cine => {
-              if (cine.type === 'node') {
-                  cineLat = cine.lat;
-                  cineLon = cine.lon;
-              } else if (cine.type === 'way' || cine.type === 'relation') {
-                  cineLat = cine.center.lat;
-                  cineLon = cine.center.lon;
-              } else {
-                  return; // Salir de la función para este cine
-              }
-  
-              // Añadir marcador para el cine
-              const cineMarker = L.marker([cineLat, cineLon], {
-                  icon: L.icon({
-                      iconSize: [25, 41],
-                      iconAnchor: [13, 41],
-                      iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
-                      shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador 
-                  })
-              }).bindPopup(cine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
-  
-              cineMarker.addTo(this.map); // Añadir el marcador al mapa
-  
-              // Extender los límites con las coordenadas del cine
-              bounds.extend([cineLat, cineLon]); // Agregar la coordenada del cine a los límites
-          });
-  
-          // Ajustar el mapa para mostrar todos los cines
-          this.map.fitBounds(bounds); // Ajustar el mapa para mostrar todos los cines
-      } else {
-        window.alert('No hay cines para mostrar en el mapa.'); // Mensaje si no hay cines
-      }
-  }
+    // Si hay cines filtrados, agregarlos al mapa
+    if (filteredCines.length > 0) {
+        let cineLat: number;
+        let cineLon: number;
+
+        // Inicializamos los límites con las coordenadas del primer cine
+        const firstCine = filteredCines[0];
+
+        // Dependiendo del tipo de elemento, extraemos las coordenadas
+        if (firstCine.type === 'node') {
+            cineLat = firstCine.lat;
+            cineLon = firstCine.lon;
+        } else if (firstCine.type === 'way' || firstCine.type === 'relation') {
+            cineLat = firstCine.center.lat;
+            cineLon = firstCine.center.lon;
+        } else {
+            return; // Salir si el tipo de cine es desconocido
+        }
+
+        // Inicializamos los límites con las coordenadas del primer cine
+        const bounds = new LatLngBounds([cineLat, cineLon], [cineLat, cineLon]); // Usa coordenadas del primer cine, si no da error
+
+        // Añadir marcador para el primer cine
+        const cineMarker = marker([cineLat, cineLon], {
+            icon: icon({
+                iconSize: [25, 41],
+                iconAnchor: [13, 41],
+                iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
+                shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador
+            })
+        }).bindPopup(firstCine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
+
+        cineMarker.addTo(this.map); // Añadir el marcador al mapa
+
+        // Iterar sobre los cines y agregar marcadores
+        filteredCines.forEach(cine => {
+            if (cine.type === 'node') {
+                cineLat = cine.lat;
+                cineLon = cine.lon;
+            } else if (cine.type === 'way' || cine.type === 'relation') {
+                cineLat = cine.center.lat;
+                cineLon = cine.center.lon;
+            } else {
+                return; // Salir de la función para este cine
+            }
+
+            // Añadir marcador para el cine
+            const cineMarker = L.marker([cineLat, cineLon], {
+                icon: L.icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
+                    shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador 
+                })
+            }).bindPopup(cine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
+
+            cineMarker.addTo(this.map); // Añadir el marcador al mapa
+
+            // Extender los límites con las coordenadas del cine
+            bounds.extend([cineLat, cineLon]); // Agregar la coordenada del cine a los límites
+        });
+
+        // Ajustar el mapa para mostrar todos los cines
+        this.map.fitBounds(bounds); // Ajustar el mapa para mostrar todos los cines
+    } else {
+        alert('No hay cines disponibles para esta película en esta ubicación.');
+    }
+}
+
+// Método para limpiar los marcadores cuando no haya películas o cines
+clearMarkers(): void {
+    this.map.eachLayer(layer => {
+        if (layer instanceof L.Marker) {
+            this.map.removeLayer(layer); // Elimina todos los marcadores
+        }
+    });
+}
 
 }

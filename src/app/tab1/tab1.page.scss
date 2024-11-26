@@ -88,6 +88,24 @@ ion-button {
   gap: 1rem;
 }
 
+.movies-grid :hover {
+  transform: scale(1.05);
+}
+
+
+/* Efecto para películas en cartelera */
+.en-cartelera {
+  border: 2px solid #ffcc00; /* Borde dorado */
+  box-shadow: 0 0 10px 4px rgba(255, 204, 0, 0.7); /* Brillo dorado */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza las transiciones */
+}
+
+/* Animación al pasar el mouse */
+.en-cartelera:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0 0 15px 6px rgba(255, 204, 0, 0.9); /* Intensifica el brillo */
+}
+
 /* Alternativa para navegadores que no soporten grid */
 @supports not (display: grid) {
   .movies-grid {

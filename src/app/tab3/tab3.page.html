@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <!-- Botón Volver -->
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab1" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/listado-peliculas" text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Geolocalización</ion-title>
   </ion-toolbar>
@@ -11,6 +11,12 @@
 <ion-content>
   <div class="app-container">
     <div class="select-boxes">
+      <div class="dropdown">
+        <label for="movie"><b>Seleccionar Película:</b></label>
+        <select id="movie" [(ngModel)]="selectedMovieTitle" (change)="updateCineMarkers()">
+          <option *ngFor="let title of movieTitles" [value]="title">{{ title }}</option>
+        </select>
+      </div>
       <div class="dropdown">
         <label for="municipio"><b>Seleccionar Municipio:</b></label>
         <select id="municipio" [(ngModel)]="selectedMunicipio" (change)="buscarCines()">
@@ -23,12 +29,7 @@
           <option *ngFor="let distancia of distancias" [value]="distancia">{{ distancia }} metros</option>
         </select>
       </div>
-      <div class="dropdown">
-        <label for="distancia"><b>Seleccionar Película:</b></label>
-        <select id="movie" [(ngModel)]="selectedMovieTitle" (change)="updateCineMarkers()">
-          <option *ngFor="let title of movieTitles" [value]="title">{{ title }}</option>
-        </select>
-      </div>
+      
     </div>
 
     <div id="map"></div>
