@@ -1,11 +1,9 @@
-//import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
-import { latLng, tileLayer, Map, marker, icon,Layer,LatLngBounds } from 'leaflet';
+import { latLng, tileLayer, Map, marker, icon, Layer, LatLngBounds } from 'leaflet';
 import * as L from 'leaflet';
 import { CargarPelisService } from '../Servicios/cargar-pelis.service';
 import { Cartelera } from '../mis-interfaces/cartelera';
 import { GeoService } from '../Servicios/geo.service';
-
 
 @Component({
   selector: 'app-tab3',
@@ -18,8 +16,8 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   lat: number = 43.0000;
   lng: number = -2.0000;
   
-  // Listado de municipios
-  municipios: string[] = ['Bilbao', 'Vitoria-Gasteiz', 'Donostia-San Sebastián', 'Barakaldo', 'Getxo', 'Irun', 'Portugalete', 'Santurtzi', 'Errenteria', 'Basauri'];
+  municipios: string[] = ['Bilbao', 'Vitoria-Gasteiz', 'Donostia-San Sebastián', 'Barakaldo', 'Getxo', 'Irun', 'Portugalete', 'Santurtzi', 'Errenteria', 'Basauri', 'Posición Actual'];
+  
   // Opciones de distancia
   distancias: number[] = [1000, 5000, 10000, 20000]; 
   selectedMunicipio: string = ''; // Municipio seleccionado
@@ -33,13 +31,12 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   options: any;
   layers: Layer[] = [];
   
-
-  constructor(private osm: GeoService,private carga : CargarPelisService) { }
+  constructor(private osm: GeoService, private carga : CargarPelisService) { }
 
   ngOnInit(): void {
     this.loadMovies(); //método para cargar las peliculas y sus cines
     this.selectedMovieTitle = this.carga.getTituloPeliculaSeleccionada();
-    console.log( "pelicula seleccionada"+ this.selectedMovieTitle);
+    console.log("pelicula seleccionada" + this.selectedMovieTitle);
   }
 
   ionViewWillEnter(): void {
@@ -53,10 +50,10 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
     this.cines = [];
     this.initMap(); 
   }
-  //Método para crear nuevo mapa
+
+  // Método para crear nuevo mapa
   initMap(): void {
     const mapContainer = document.getElementById('map');
-  
     if (!mapContainer) {
       return;
     }
@@ -73,20 +70,18 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   
     setTimeout(() => {
       this.map.invalidateSize();
-
     }, 300);
   }
 
   ionViewWillLeave(): void {
     this.ngOnDestroy(); 
-    
   }
+
   ngOnDestroy(): void {
-   if (this.map) {
+    if (this.map) {
       this.map.remove();
       this.map = undefined!; 
     }
-  
     const mapContainer = document.getElementById('map');
     if (mapContainer) {
       mapContainer.innerHTML = ''; 
@@ -94,16 +89,12 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
     this.carga.setTituloPeliculaSeleccionada("");
   }
 
-  
-
-
- loadMovies(): void {
+  loadMovies(): void {
     this.carga.getCartelera().subscribe(
       (movies: Cartelera[]) => {
-        this.movies = movies; // Guardamos las películas 
-        console.log(this.movies); // Mostramos el array en consola
-
-        //Cargar los títulos de las películas en el desplegable.
+        this.movies = movies; 
+        console.log(this.movies); 
+       
         this.movieTitles = [...this.movies.map(movie => movie.pelicula)];
         console.log("Lista de títulos de películas:", this.movieTitles);
       },
@@ -113,7 +104,6 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  
   ngAfterViewInit(): void {
     // Inicializa el mapa
     this.map = new Map('map').setView([this.lat, this.lng], 8);
@@ -130,18 +120,39 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   }
 
   buscarCines(): void {
-    if (this.selectedMunicipio && this.selectedDistancia) {
+    if (this.selectedMunicipio === 'Posición Actual') {
+    
+      this.osm.getCurrentPosition().subscribe(
+        (coords) => {
+          this.lat = coords.latitude;
+          this.lng = coords.longitude;
+          this.updateMap(); 
+          this.osm.getNearbyCinemas(this.lat, this.lng, this.selectedDistancia).subscribe(cineResponse => {
+            if (cineResponse && cineResponse.elements) {
+              this.cines = cineResponse.elements;
+              this.updateCineMarkers(); 
+              console.log('Datos de cines obtenidos:', this.cines);
+            }
+          });
+        },
+        (error) => {
+          console.error('Error al obtener la geolocalización:', error);
+          alert('No se pudo obtener la ubicación.');
+        }
+      );
+    } else if (this.selectedMunicipio && this.selectedDistancia) {
+      
       this.osm.getCoordinates(this.selectedMunicipio).subscribe(response => {
         if (response && response.length > 0) {
           const location = response[0];
           this.lat = parseFloat(location.lat);
           this.lng = parseFloat(location.lon);
-          this.updateMap(); // Método para actualizar el mapa
+          this.updateMap(); 
           this.osm.getNearbyCinemas(this.lat, this.lng, this.selectedDistancia).subscribe(cineResponse => {
             if (cineResponse && cineResponse.elements) {
               this.cines = cineResponse.elements;
-              this.updateCineMarkers(); // Método para actualizar los marcadores
-              console.log('Datos de cines obtenidos:', this.cines); // Agrega esta línea para verificar los datos
+              this.updateCineMarkers(); 
+              console.log('Datos de cines obtenidos:', this.cines);
             }
           });
         }
@@ -150,28 +161,20 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateMap(): void {
-    this.map.setView([this.lat, this.lng], 13); // Centra el mapa en el municipio seleccionado
+    this.map.setView([this.lat, this.lng], 13); // Centra el mapa en la nueva ubicación
   }
 
-  
-   
-   //Añade marcadores para cada cine encontrado en el mapa.
-   
-   updateCineMarkers(): void {
-    // Verifica si la película seleccionada está en la lista de películas
+  updateCineMarkers(): void {
     const selectedMovie = this.movies.find(movie => movie.pelicula === this.selectedMovieTitle);
 
     if (!selectedMovie) {
-        // Si la película no está en la lista, mostrar un mensaje y no pintar los cines
         alert('La película seleccionada no está en cartelera.');
-        this.clearMarkers(); // Limpiar marcadores en el mapa si la película no existe
-        return; // No continuar con el resto de la ejecución
+        this.clearMarkers(); // Limpiar marcadores si la película no está disponible
+        return;
     }
 
-    // Si la película está en cartelera, entonces filtrar y pintar los cines
     let filteredCines = this.cines;
 
-    // Filtrar los cines según la película seleccionada
     if (this.selectedMovieTitle !== '') {
         filteredCines = this.cines.filter(cine => {
             return selectedMovie.cines.some(cinema => {
@@ -180,15 +183,12 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    // Si hay cines filtrados, agregarlos al mapa
     if (filteredCines.length > 0) {
         let cineLat: number;
         let cineLon: number;
 
-        // Inicializamos los límites con las coordenadas del primer cine
         const firstCine = filteredCines[0];
 
-        // Dependiendo del tipo de elemento, extraemos las coordenadas
         if (firstCine.type === 'node') {
             cineLat = firstCine.lat;
             cineLon = firstCine.lon;
@@ -196,25 +196,22 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
             cineLat = firstCine.center.lat;
             cineLon = firstCine.center.lon;
         } else {
-            return; // Salir si el tipo de cine es desconocido
+            return;
         }
 
-        // Inicializamos los límites con las coordenadas del primer cine
-        const bounds = new LatLngBounds([cineLat, cineLon], [cineLat, cineLon]); // Usa coordenadas del primer cine, si no da error
+        const bounds = new LatLngBounds([cineLat, cineLon], [cineLat, cineLon]);
 
-        // Añadir marcador para el primer cine
         const cineMarker = marker([cineLat, cineLon], {
             icon: icon({
                 iconSize: [25, 41],
                 iconAnchor: [13, 41],
-                iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
-                shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador
+                iconUrl: 'assets/cinema-marker-icon.png',
+                shadowUrl: 'assets/marker-shadow.png'
             })
-        }).bindPopup(firstCine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
+        }).bindPopup(firstCine.tags.name || 'Cine');
 
-        cineMarker.addTo(this.map); // Añadir el marcador al mapa
+        cineMarker.addTo(this.map);
 
-        // Iterar sobre los cines y agregar marcadores
         filteredCines.forEach(cine => {
             if (cine.type === 'node') {
                 cineLat = cine.lat;
@@ -223,37 +220,33 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
                 cineLat = cine.center.lat;
                 cineLon = cine.center.lon;
             } else {
-                return; // Salir de la función para este cine
+                return;
             }
 
-            // Añadir marcador para el cine
             const cineMarker = L.marker([cineLat, cineLon], {
                 icon: L.icon({
                     iconSize: [25, 41],
                     iconAnchor: [13, 41],
-                    iconUrl: 'assets/cinema-marker-icon.png', // Ruta del ícono de cine
-                    shadowUrl: 'assets/marker-shadow.png' // Ruta de la sombra del marcador 
+                    iconUrl: 'assets/cinema-marker-icon.png',
+                    shadowUrl: 'assets/marker-shadow.png'
                 })
-            }).bindPopup(cine.tags.name || 'Cine'); // Muestra el nombre del cine en un popup
+            }).bindPopup(cine.tags.name || 'Cine');
 
-            cineMarker.addTo(this.map); // Añadir el marcador al mapa
+            cineMarker.addTo(this.map);
 
-            // Extender los límites con las coordenadas del cine
-            bounds.extend([cineLat, cineLon]); // Agregar la coordenada del cine a los límites
+            bounds.extend([cineLat, cineLon]);
         });
 
-        // Ajustar el mapa para mostrar todos los cines
-        this.map.fitBounds(bounds); // Ajustar el mapa para mostrar todos los cines
+        this.map.fitBounds(bounds);
     } else {
         alert('No hay cines disponibles para esta película en esta ubicación.');
     }
 }
 
-// Método para limpiar los marcadores cuando no haya películas o cines
 clearMarkers(): void {
     this.map.eachLayer(layer => {
         if (layer instanceof L.Marker) {
-            this.map.removeLayer(layer); // Elimina todos los marcadores
+            this.map.removeLayer(layer);
         }
     });
 }

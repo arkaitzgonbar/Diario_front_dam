@@ -45,4 +45,22 @@ export class GeoService {
 
     return this.http.get('https://overpass-api.de/api/interpreter', { params });//Utilizamos la api pverpass para obtener los cines.
   }
+
+  getCurrentPosition(): Observable<GeolocationCoordinates> {
+    return new Observable((observer) => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log('GeoLocation');
+            observer.next(position.coords);
+          },
+          (error) => {
+            observer.error(error);
+          }
+        );
+      } else {
+        observer.error('Geolocation is not available in this browser.');
+      }
+    });
+  }
 }
