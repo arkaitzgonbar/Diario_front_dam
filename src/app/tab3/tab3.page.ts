@@ -126,6 +126,17 @@ export class Tab3Page implements OnInit, AfterViewInit, OnDestroy {
         (coords) => {
           this.lat = coords.latitude;
           this.lng = coords.longitude;
+          const currentLocationMarker = marker([this.lat, this.lng], {
+            icon: icon({
+                iconSize: [25, 41],
+                iconAnchor: [13, 41],
+                iconUrl: 'assets/location.png',
+                shadowUrl: 'assets/marker-shadow.png'
+            })
+        }).bindPopup('Posición Actual');
+
+        currentLocationMarker.addTo(this.map);
+    
           this.updateMap(); 
           this.osm.getNearbyCinemas(this.lat, this.lng, this.selectedDistancia).subscribe(cineResponse => {
             if (cineResponse && cineResponse.elements) {

@@ -19,7 +19,7 @@
         "imagen": "https://upload.wikimedia.org/wikipedia/en/3/34/The_Grudge_2020_Poster.jpeg",
         "anchoImagen": 220,
         "altoImagen": 326,
-        "enCartel": false
+        "enCartel": true
     },
     {
         "titulo": "Underwater",
@@ -42,7 +42,7 @@
         "imagen": "https://upload.wikimedia.org/wikipedia/en/4/4a/Underwater_poster.jpeg",
         "anchoImagen": 250,
         "altoImagen": 398,
-        "enCartel": false
+        "enCartel": true
     },
     {
         "titulo": "Like a Boss",
@@ -62,7 +62,7 @@
         "imagen": "https://upload.wikimedia.org/wikipedia/en/9/9a/LikeaBossPoster.jpg",
         "anchoImagen": 259,
         "altoImagen": 383,
-        "enCartel": true
+        "enCartel": false
     },
     {
         "titulo": "Three Christs",
