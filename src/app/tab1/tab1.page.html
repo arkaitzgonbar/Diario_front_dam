@@ -41,7 +41,7 @@
   <div class="movies-grid">
     <ion-card *ngFor="let pelicula of peliculasFiltradas" 
               (click)="abrirModal(pelicula)" 
-              [ngClass]="{'en-cartelera': pelicula.enCartel}">
+              [ngClass]="{'en-cartelera': pelicula.enCartel === 'true'}">
       <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
       <ion-card-header>
         <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
