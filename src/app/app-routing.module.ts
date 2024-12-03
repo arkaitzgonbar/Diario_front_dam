@@ -4,11 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/tabs/listado-peliculas', 
+    redirectTo: '/mi-app/listado-peliculas', 
     pathMatch: 'full',
   },
   {
-    path: 'tabs',
+    path: 'mi-app',
     loadChildren: () => import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
   {
