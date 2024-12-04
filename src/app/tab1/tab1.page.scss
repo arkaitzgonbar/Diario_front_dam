@@ -30,7 +30,29 @@ ion-content {
   color: #ffffff;
   padding: 1rem;
 }
+/*spinner de carga*/
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  text-align: center;
+}
 
+.loading-spinner ion-spinner {
+  margin-bottom: 10px;
+}
+
+.loading-spinner p {
+  color: white; 
+  font-size: 1.2rem; 
+}
+
+.loading-spinner ion-progress-bar {
+  width: 30%; 
+  margin-top: 10px;
+}
 /* Contenedor de los filtros */
 .filter-container {
   display: -webkit-flex;

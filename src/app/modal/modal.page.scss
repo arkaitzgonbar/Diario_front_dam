@@ -24,6 +24,16 @@ img {
   margin: 1rem auto;
   display: block;
 
+  .toggle-icon {
+    color: #007bff; 
+    cursor: pointer;
+    margin-left: 0.5rem; 
+  }
+  
+  .toggle-icon:hover {
+    color: #0056b3; 
+  }
+
   /* Media query para agrandar la imagen en pantallas más grandes */
   @media (min-width: 600px) {
     max-width: 300px;

@@ -5,8 +5,14 @@
 </ion-header>
 
 <ion-content>
+
+  <div class="loading-spinner" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando películas...</p>
+    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+  </div>
   <!-- Contenedor de Filtros -->
-  <div class="filter-container">
+  <div class="filter-container" *ngIf="!isLoading">
     <ion-item>
       <ion-label>Título:</ion-label>
       <ion-input [(ngModel)]="buscarTexto" placeholder="Buscar..."></ion-input>

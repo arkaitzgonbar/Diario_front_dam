@@ -17,6 +17,9 @@ export class ModalPage{
   numeroValoraciones: number = 0;
   stars: string[] = [];
 
+  //VAriable para controlar los géneros
+  verGeneros: boolean = false;
+
   constructor(private alertController: AlertController,private modalController: ModalController, private clasificacion: ClasificacionService,private router : Router, private carga : CargarPelisService) {}
 
   ngOnInit() {
@@ -35,9 +38,13 @@ export class ModalPage{
   cerrar() {
     this.modalController.dismiss();
   }
+  toggleGeneros() {
+    this.verGeneros = !this.verGeneros;
+  }
+
   abrirGeolocalizacion(titulo : String) {
     this.carga.setTituloPeliculaSeleccionada(this.pelicula.titulo);
-    this.router.navigate(['/tabs/cines-cercanos']); 
+    this.router.navigate(['/mi-app/cines-cercanos']); 
     this.modalController.dismiss(); 
   }
 

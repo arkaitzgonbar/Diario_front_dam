@@ -11,7 +11,22 @@
   <img [src]="pelicula.imagen" />
   <p><strong>Año:</strong> {{ pelicula.fechaEstreno }}</p>
   <p><strong>Reparto:</strong> {{ pelicula.reparto.join(', ') }}</p>
-  <p><strong>Géneros:</strong> {{ pelicula.generos.join(', ') }}</p>
+  <!--<p><strong>Géneros:</strong> {{ pelicula.generos.join(', ') }}</p>-->
+  <p>
+    <strong>Géneros:</strong>
+    <span *ngIf="pelicula.generos.length > 2 && !verGeneros">
+      {{ pelicula.generos.slice(0, 2).join(', ') }}
+      <ion-icon name="add-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
+    </span>
+    <span *ngIf="pelicula.generos.length > 2 && verGeneros">
+      {{ pelicula.generos.join(', ') }}
+      <ion-icon name="remove-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
+    </span>
+    <span *ngIf="pelicula.generos.length <= 2">
+      {{ pelicula.generos.join(', ') }}
+    </span>
+  </p>
+  
   <p>{{ pelicula.resumen }}</p>
 
   
