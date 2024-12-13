@@ -45,7 +45,10 @@ export class GeoService {
 
     return this.http.get('https://overpass-api.de/api/interpreter', { params });//Utilizamos la api pverpass para obtener los cines.
   }
-
+/**
+   * Métod que obtiene la posición actual del usuario utilizando la API de Geolocalización del navegador.
+   * @returns Observable que emite las coordenadas del usuario o un error si no es posible obtenerlas.
+   */
   getCurrentPosition(): Observable<GeolocationCoordinates> {
     return new Observable((observer) => {
       if ('geolocation' in navigator) {

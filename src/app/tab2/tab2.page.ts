@@ -54,27 +54,6 @@ export class Tab2Page implements OnInit{
     this.clasificacionService.eliminarPeliculaDeClasificacion(this.segmentoSeleccionado, index);
   }
 }
- /*
- METODO PARA ABRIR EL MODA QUE YA TENEMOS. SE PUEDE ADAPTAR POR SI QUEREMOS OTRO
-  async abrirModal(pelicula: any) {
-    const modal = await this.modal.create({
-      component: ModalPage,
-      componentProps: { pelicula }
-    });
-    await modal.present();
-  }
-*/
-  async abrirAgregarClasificacionModal() {
-    const modal = await this.modal.create({
-      component: NuevaClasificacionPage,
-      cssClass: 'custom-modal' 
-    });
-    modal.onDidDismiss().then(() => {
-      this.clasificaciones = this.clasificacionService.obtenerClasificaciones();
-    });
-    await modal.present();
-  }
-
   cambioSegmento(event: any) {
     this.segmentoSeleccionado = event.detail.value;
     this.obtenerPeliculasClasificadas();
@@ -85,7 +64,43 @@ export class Tab2Page implements OnInit{
     this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
   }
 
-  async abrirEliminarClasificacionModal() {
+  async abrirAgregarClasificacion() {
+    const alert = await this.alertController.create({
+      header: 'Agregar Clasificación',
+      cssClass: 'custom-alert',
+      inputs: [
+        {
+          name: 'nuevaClasificacion',
+          type: 'text',
+          placeholder: 'Escribe una clasificación...'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            const nuevaClasificacion = data.nuevaClasificacion?.trim();
+            if (nuevaClasificacion) {
+              this.clasificacionService.agregarClasificacion(nuevaClasificacion);
+              this.actualizarClasificaciones();
+              return true;
+            } else {
+              return false;
+            }
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+  
+
+  async abrirEliminarClasificacion() {
     const alert = await this.alertController.create({
       header: 'Eliminar clasificación',
       cssClass: 'custom-alert',

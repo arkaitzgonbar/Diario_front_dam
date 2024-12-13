@@ -30,21 +30,24 @@ export class Tab1Page {
   constructor(private cargar: CargarPelisService, private modal: ModalController) {} //Injectamos el servicio y modal controler para el modal
 
   ngOnInit() {
-    this.isLoading = true; 
+    this.isLoading = true; // Activa la barra de carga
 
     // Cargar todas las películas al inicio
     this.cargar.getPeliculas().pipe(delay(5000)).subscribe((data) => {//delay para retrasar artificialmente
       this.peliculas = data;
       this.peliculasFiltradas = data; // Inicia con todas las pelis
       this.actualizarGeneros();
-      this.isLoading = false;
+      this.isLoading = false;//Desactiva la barra de carga
       }, error => {
       console.error("Error cargando películas", error);
       this.isLoading = false;
     });
   }
 
-  // Método para actualizar los géneros dinámicamente
+   /**
+   * Actualiza la lista de géneros disponibles de manera dinámica en función de las peliculas cargadas.
+   * Elimina duplicados y ordena los géneros alfabéticamente.
+   */
 actualizarGeneros() {
   const cadaGenero= new Set<string>();
 
@@ -59,7 +62,10 @@ actualizarGeneros() {
   this.generos = Array.from(cadaGenero).sort();
 }
 
-  // Filtrar las películas 
+   /**
+   * Método para filtrar la lista de películas mostradas.
+   * Filtra por título, género y año de lanzamiento según los valores introducidos.
+   */
   filtrar() {
     this.peliculasFiltradas = this.peliculas;
 
@@ -79,7 +85,10 @@ actualizarGeneros() {
     }
   }
 
-  // Abrir modal con detalles de película
+  /**
+   * Método pra abrir un modal con los detalles de la película seleccionada.
+   * @param pelicula Objeto que contiene los datos de la película a mostrar en el modal.
+   */
   async abrirModal(pelicula: any) {
     const modal = await this.modal.create({
       component: ModalPage,
@@ -87,7 +96,4 @@ actualizarGeneros() {
     });
     await modal.present();
   }
-
-
-
 }

@@ -6,18 +6,22 @@
 
 <ion-content>
 
+  <!-- Indicador de carga-->
   <div class="loading-spinner" *ngIf="isLoading">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando películas...</p>
-    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar> <!--La propiedad type indeterminate hace que la animación sea continua -->
   </div>
-  <!-- Contenedor de Filtros -->
+ <!-- Contenedor de filtros, se muestra cuando los datos ya están cargados -->
   <div class="filter-container" *ngIf="!isLoading">
+
+    <!-- Filtro de texto para buscar por título -->
     <ion-item>
       <ion-label>Título:</ion-label>
       <ion-input [(ngModel)]="buscarTexto" placeholder="Buscar..."></ion-input>
     </ion-item>
 
+    <!-- Filtro por género -->
     <ion-label>Género:</ion-label>
     <ion-item class="genre-item">
      
@@ -26,7 +30,7 @@
         <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
       </ion-select>
     </ion-item>
-
+    <!-- Filtro por año de lanzamiento -->
     <ion-item>
       <ion-label>Año</ion-label>
       <ion-input type="number" [(ngModel)]="FechaLanzamiento" placeholder="Año"></ion-input>
@@ -35,15 +39,7 @@
     <ion-button color="primary" (click)="filtrar()">Buscar</ion-button>
   </div>
 
-  <!-- Grid de películas 
-  <div class="movies-grid">
-    <ion-card *ngFor="let pelicula of peliculasFiltradas" (click)="abrirModal(pelicula)">
-      <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
-      <ion-card-header>
-        <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-  </div>-->
+   <!-- Grid de películas, muestra las películas filtradas en ion-cards -->
   <div class="movies-grid">
     <ion-card *ngFor="let pelicula of peliculasFiltradas" 
               (click)="abrirModal(pelicula)" 
