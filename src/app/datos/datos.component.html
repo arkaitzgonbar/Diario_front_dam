@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div>
+    <i class="fa-regular {{soloCinesConPeliculas() ? 'fa-eye':'fa-eye-slash'}}" (click)="onClick()">Mostrar cines con peliculas</i>
+  </div>
+  <div>
+    @if (mostrar() === DataType.cine){
+      <app-mostrar-cine-peliculas
+        [datos]="datos()"
+      >
+      </app-mostrar-cine-peliculas>
+    }
+    @if(mostrar() === DataType.pelicula){
+      <app-mostrar-pelicula-cines
+        [datos]="datos()"
+      ></app-mostrar-pelicula-cines>
+    }
+    @if (mostrar() === DataType.nada) {
+      <div></div>
+
+    }
+
+  </div>
+
+</div>

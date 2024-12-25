@@ -1,0 +1,17 @@
+<div class="search">
+  <div class="autocomplete" style="width:300px;">
+    <i class="fa-solid fa-magnifying-glass icon"></i>
+    <input id="myInput"
+           type="text"  #state
+           (input)="onWrite(state)"
+           (keypress)="onKeypress($event, state)"
+    >
+    <div class="autocomplete-items" >
+      @for (item of pelisOptions(); track $index) {
+        <input type="text" value="{{item}}" (click)="onSelect(item, state)">
+      }
+    </div>
+  </div>
+  <button (click)="onReset()">Reset</button>
+</div>
+

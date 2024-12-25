@@ -7,31 +7,15 @@
     <ion-title>Geolocalización</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <div class="app-container">
-    <div class="select-boxes">
-      <div class="dropdown">
-        <label for="movie"><b>Seleccionar Película:</b></label>
-        <select id="movie" [(ngModel)]="selectedMovieTitle" (change)="updateCineMarkers()">
-          <option *ngFor="let title of movieTitles" [value]="title">{{ title }}</option>
-        </select>
-      </div>
-      <div class="dropdown">
-        <label for="municipio"><b>Seleccionar Municipio:</b></label>
-        <select id="municipio" [(ngModel)]="selectedMunicipio" (change)="buscarCines()">
-          <option *ngFor="let municipio of municipios" [value]="municipio">{{ municipio }}</option>
-        </select>
-      </div>
-      <div class="dropdown">
-        <label for="distancia"><b>Seleccionar Distancia:</b></label>
-        <select id="distancia" [(ngModel)]="selectedDistancia" (change)="buscarCines()">
-          <option *ngFor="let distancia of distancias" [value]="distancia">{{ distancia }} metros</option>
-        </select>
-      </div>
-      
+  <div class="main">
+    <div class="left">
+    <app-datos></app-datos>
     </div>
 
-    <div id="map"></div>
+    <div class="right">
+      <app-search></app-search>
+     <app-map></app-map>
+
+    </div>
+
   </div>
-</ion-content>

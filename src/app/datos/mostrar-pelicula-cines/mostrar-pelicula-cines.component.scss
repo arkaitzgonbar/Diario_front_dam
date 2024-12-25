@@ -1,0 +1,22 @@
+.pelicula-wrapper{
+  gap: 5px;
+}
+
+.cines-wrapper{
+
+  height: 800px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+}
+.horarios-wrapper{
+  display: flex;
+  gap: 10px;
+}
+
+.separador{
+  height: 1px;
+  width: 80%;
+  border-top: 2px solid gray;
+}

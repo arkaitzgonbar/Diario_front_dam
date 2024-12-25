@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { CargarPelisService } from '../Servicios/cargar-pelis.service';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import { CargarPelisService } from '../servicios/cargar-pelis.service';
+import { ClasificacionService } from '../servicios/clasificacion.service';
 
 @Component({
   selector: 'app-modal',
@@ -12,7 +12,7 @@ import { ClasificacionService } from '../Servicios/clasificacion.service';
 export class ModalPage{
   @Input() pelicula: any;
   ListasClasificacion: any[] = [];
-  
+
   valoracionMedia: number = 0;
   numeroValoraciones: number = 0;
   stars: string[] = [];
@@ -34,7 +34,7 @@ export class ModalPage{
     this.clasificacion.clasificar(this.pelicula, clasificacion);
     this.modalController.dismiss();
   }
-  
+
   cerrar() {
     this.modalController.dismiss();
   }
@@ -44,8 +44,8 @@ export class ModalPage{
 
   abrirGeolocalizacion(titulo : String) {
     this.carga.setTituloPeliculaSeleccionada(this.pelicula.titulo);
-    this.router.navigate(['/mi-app/cines-cercanos']); 
-    this.modalController.dismiss(); 
+    this.router.navigate(['/mi-app/cines-cercanos']);
+    this.modalController.dismiss();
   }
 
 
@@ -59,10 +59,10 @@ export class ModalPage{
   }
 
   actualizarEstrellas() {
-    
+
     const estrellasLlenas = Math.round(this.valoracionMedia);
     this.stars = [];
-  
+
     for (let i = 0; i < 5; i++) {
       if (i < estrellasLlenas) {
         this.stars.push('star');
@@ -78,43 +78,43 @@ export class ModalPage{
       message: 'Por favor, introduce un número entre 0 y 5.',
       inputs: [
         {
-          name: 'valoracion', 
-          type: 'number',     
-          min: 0,             
-          max: 5,             
-          placeholder: 'Valoración', 
+          name: 'valoracion',
+          type: 'number',
+          min: 0,
+          max: 5,
+          placeholder: 'Valoración',
         },
       ],
       buttons: [
         {
-          text: 'Cancelar', 
-          role: 'cancel',   
+          text: 'Cancelar',
+          role: 'cancel',
           handler: () => {
             console.log('Valoración cancelada');
           },
         },
         {
-          text: 'Aceptar', 
+          text: 'Aceptar',
           handler: (data) => {
             const valor = parseFloat(data.valoracion);
 
             if (!isNaN(valor) && valor >= 0 && valor <= 5) {
               this.clasificacion.guardarValoracion(this.pelicula.id, valor);
-              this.obtenerValoracion(); 
+              this.obtenerValoracion();
             } else {
-              
-              this.mostrarErrorValoracion(); 
+
+              this.mostrarErrorValoracion();
             }
           },
         },
       ],
     });
 
-    
-    await alert.present(); 
+
+    await alert.present();
   }
 
-  
+
   async mostrarErrorValoracion() {
     const errorAlert = await this.alertController.create({
       header: 'Error',
@@ -122,6 +122,6 @@ export class ModalPage{
       buttons: ['OK'],
     });
 
-    await errorAlert.present(); 
+    await errorAlert.present();
   }
 }

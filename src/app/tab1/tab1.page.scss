@@ -45,12 +45,12 @@ ion-content {
 }
 
 .loading-spinner p {
-  color: white; 
-  font-size: 1.2rem; 
+  color: white;
+  font-size: 1.2rem;
 }
 
 .loading-spinner ion-progress-bar {
-  width: 30%; 
+  width: 30%;
   margin-top: 10px;
 }
 /* Contenedor de los filtros */
@@ -60,7 +60,7 @@ ion-content {
   display: flex;
   gap: 1.5rem;
   -webkit-flex-wrap: wrap;
-  flex-wrap: wrap; //Permite que los elementos se muevan a una nueva línea en pantallas pequeñas 
+  flex-wrap: wrap; //Permite que los elementos se muevan a una nueva línea en pantallas pequeñas
   align-items: center;
   background-color: #1e1e1e;
   padding: 0.5rem;
@@ -77,7 +77,7 @@ ion-label,
 ion-input,
 ion-select {
   color: #ffffff;
-  --placeholder-color: #ffffff88; 
+  --placeholder-color: #ffffff88;
   --placeholder-color-webkit: #ffffff88;
   --placeholder-color-moz: #ffffff88;
 }
@@ -118,7 +118,7 @@ ion-button {
 /* Efecto para películas en cartelera */
 .en-cartelera {
   border: 2px solid #ffcc00; /* Borde dorado */
-  box-shadow: 0 0 10px 4px rgba(255, 204, 0, 0.7); /* Brillo dorado */
+  box-shadow: 0 0 10px 4px rgba(237, 212, 0, 0.8); /* Brillo dorado */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza las transiciones */
 }
 
@@ -156,8 +156,8 @@ ion-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%; 
-  min-width: 150px; 
+  width: 100%;
+  min-width: 150px;
 }
 
 /* Ajuste de la imagen en cada tarjeta */
@@ -177,10 +177,10 @@ ion-card-title {
   color: #ffffff;
   white-space: normal; //Divide el texto el lineas
   overflow-wrap: break-word; //LAs palabras largas se puede dividir
-  word-break: break-word; 
+  word-break: break-word;
   text-align: center;
-  max-width: 100%; 
-  line-height: 1.2; 
+  max-width: 100%;
+  line-height: 1.2;
 }
 
 /* Responsividad para pantallas medianas */

@@ -1,0 +1,17 @@
+<div class="pelicula-wrapper">
+  <h2>{{datos().titulo}}</h2>
+  <img src="{{datos().imagen}}" width="{{datos().anchoImagen}}" height="{{datos().anchoImagen}}">
+
+  <div class="cines-wrapper">
+    @for (cine of datos().cines; track $index) {
+      <h3>{{cine.nombre}}</h3>
+      <div class="horarios-wrapper">
+        <label>Horarios: </label>
+        @for (horario of cine.horarios ; track $index) {
+          <span>{{horario}}</span>
+        }
+      </div>
+      <div class="separador"></div>
+    }
+  </div>
+</div>

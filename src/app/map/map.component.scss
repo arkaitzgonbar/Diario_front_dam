@@ -1,0 +1,66 @@
+.map-container{
+  /*width: 90%;*/
+  width: 100%;
+  height: 800px;
+  border-color: red;
+  margin: auto;
+  margin-left: 5px;
+}
+.map-content{
+  position: relative;
+
+}
+
+
+.buttons button :hover{
+  background-color: red;
+  color: blue;
+}
+.viewBar div {
+  background-color: green;
+  background: yellow;
+}
+.dragFile{
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  width: 50%;
+}
+.dragFile dialog{
+
+  display: block;
+
+  overflow: hidden;
+}
+.viewBar{
+  float: right;
+}
+.viewButtons button{
+  background-color: green;
+  color: red;
+}
+.viewButtons{
+  background-color: aqua;
+  background: red;
+}
+.editBar{
+  left: 0%;
+}
+.controlButton button{
+  color: red;
+  background: green;
+  background-color: blue;
+}
+
+#cine {
+  position: absolute;
+  display: flex;
+  height: auto;
+  width: auto;
+  z-index: 100;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px;
+  visibility: hidden;
+}

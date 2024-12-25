@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import { ClasificacionService } from '../servicios/clasificacion.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { NuevaClasificacionPage } from '../nueva-clasificacion/nueva-clasificacion.page';
@@ -14,8 +14,8 @@ export class Tab2Page implements OnInit{
   clasificaciones: string[] = [];
   peliculas: any[] = [];
   segmentoSeleccionado: string = '';
- 
-  
+
+
 
   constructor(private clasificacionService: ClasificacionService, private modal:ModalController, private alertController: AlertController) {}
 
@@ -27,12 +27,12 @@ export class Tab2Page implements OnInit{
     this.clasificaciones = this.clasificacionService.obtenerClasificaciones();
     this.filtrarPeliculasPorClasificacion();
   }
-  
+
   clasificarPelicula(pelicula: any, clasificacion: string) {
-          
+
       // Clasificamos la película usando el servicio
       this.clasificacionService.clasificar(pelicula, clasificacion);
-    
+
       // Recargamos las películas de la clasificación seleccionada
       this.obtenerPeliculasClasificadas();
     }
@@ -95,10 +95,10 @@ export class Tab2Page implements OnInit{
         }
       ]
     });
-  
+
     await alert.present();
   }
-  
+
 
   async abrirEliminarClasificacion() {
     const alert = await this.alertController.create({
@@ -133,7 +133,7 @@ export class Tab2Page implements OnInit{
     this.actualizarClasificaciones();
   }
 
- 
+
 }
 
 

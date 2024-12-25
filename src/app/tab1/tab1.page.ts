@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CargarPelisService } from '../Servicios/cargar-pelis.service';
+import { CargarPelisService } from '../servicios/cargar-pelis.service';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 
@@ -16,7 +16,7 @@ export class Tab1Page {
   //Arrays donde guardamos las peliculas iniciales y las obtenidas por filtros
   peliculas: any[] = [];
   peliculasFiltradas: any[] = [];
-  
+
   // Variables para filtros
   buscarTexto: string = '';
   generoSeleccionado: string = '';

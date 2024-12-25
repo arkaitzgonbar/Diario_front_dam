@@ -1,0 +1,27 @@
+.cine-peliculas-wrapper{
+
+  height: 800px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.cinePelicula{
+  height: fit-content;
+  margin-bottom: 15px;
+  h3{
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  h5{
+    font-weight: bold;
+  }
+}
+.horarios-wrapper{
+  display: flex;
+  gap: 10px;
+}
+.separador{
+  height: 1px;
+  width: 80%;
+  border-top: 2px solid gray;
+}

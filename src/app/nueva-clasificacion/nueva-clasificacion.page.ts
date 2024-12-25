@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import { ClasificacionService } from '../servicios/clasificacion.service';
 
 @Component({
   selector: 'app-nueva-clasificacion',

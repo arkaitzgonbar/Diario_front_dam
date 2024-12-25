@@ -1,0 +1,621 @@
+{
+  "fecha": "2024-12-17",
+  "cines": [
+    {
+        "id": 1,
+        "longitud": "43.220175884534434",
+        "latitud": "-2.7315331993553027",
+        "nombre": "Zornotza Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 2,
+        "longitud": "43.193706428848394",
+        "latitud": "-3.1952683704566365",
+        "nombre": "Klaret Antzokia Zinema",
+        "peliculas": []
+    },
+    {
+        "id": 3,
+        "longitud": "43.28736260798031",
+        "latitud": "-3.0070976109257153",
+        "nombre": "Cinesa Max Ocio",
+        "peliculas": [
+            {
+                "id": 4,
+                "titulo": "Sonic 2, la película",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Sonic_2%2C_la_pel%C3%ADcula_logo.png/220px-Sonic_2%2C_la_pel%C3%ADcula_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 124,
+                "horario": [
+                    ""
+                ]
+            },
+            {
+                "id": 5,
+                "titulo": "Mufasa: el rey león",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mufasa_The_Lion_King_logo.png/220px-Mufasa_The_Lion_King_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 116,
+                "horario": [
+                    "17:00",
+                    "19:45",
+                    "22:30"
+                ]
+            },
+            {
+                "id": 6,
+                "titulo": "Un lío de millones",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "16:45",
+                    "19:00",
+                    "21:25"
+                ]
+            },
+            {
+                "id": 7,
+                "titulo": "La guitarra flamenca de Yerai Cortés",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/La_guitarra_flamenca_de_Yerai_Cort%C3%A9s_at_SSIFF_2024.jpg/220px-La_guitarra_flamenca_de_Yerai_Cort%C3%A9s_at_SSIFF_2024.jpg",
+                "anchoImagen": 220,
+                "altoImagen": 295,
+                "horario": [
+                    "20:05",
+                    "22:30"
+                ]
+            },
+            {
+                "id": 8,
+                "titulo": "¿Es el enemigo? La película de Gila",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "16:15",
+                    "19:40"
+                ]
+            },
+            {
+                "id": 9,
+                "titulo": "Superklaus",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "15:50"
+                ]
+            },
+            {
+                "id": 10,
+                "titulo": "Vaiana 2 (España)",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "15:50",
+                    "16:50",
+                    "18:15",
+                    "19:15",
+                    "20:40"
+                ]
+            },
+            {
+                "id": 11,
+                "titulo": "Sonríe 2 (Hispanoamérica)",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Smile_2_logo.png/220px-Smile_2_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 168,
+                "horario": [
+                    "22:00"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "longitud": "43.29688372531966",
+        "latitud": "-2.986839620815956",
+        "nombre": "Teatro Barakaldo",
+        "peliculas": []
+    },
+    {
+        "id": 5,
+        "longitud": "43.293484878966225",
+        "latitud": "-3.0046014630366953",
+        "nombre": "Yelmo Cines Megapark",
+        "peliculas": []
+    },
+    {
+        "id": 6,
+        "longitud": "43.23537284959738",
+        "latitud": "-2.8891516164895354",
+        "nombre": "Social Antzokia Basauri",
+        "peliculas": []
+    },
+    {
+        "id": 7,
+        "longitud": "43.418785243051325",
+        "latitud": "-2.7237598164803476",
+        "nombre": "Néstor Basterretxea Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 8,
+        "longitud": "43.26063240720286",
+        "latitud": "-2.9396067316447323",
+        "nombre": "Cineclub FAS",
+        "peliculas": []
+    },
+    {
+        "id": 9,
+        "longitud": "43.26794465347404",
+        "latitud": "-2.940708874160376",
+        "nombre": "Cinesa Zubiarte",
+        "peliculas": [
+            {
+                "id": 12,
+                "titulo": "Sonic 2, la película",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Sonic_2%2C_la_pel%C3%ADcula_logo.png/220px-Sonic_2%2C_la_pel%C3%ADcula_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 124,
+                "horario": [
+                    ""
+                ]
+            },
+            {
+                "id": 13,
+                "titulo": "Mufasa: el rey león",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mufasa_The_Lion_King_logo.png/220px-Mufasa_The_Lion_King_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 116,
+                "horario": [
+                    "16:00",
+                    "18:00",
+                    "18:45",
+                    "20:45",
+                    "21:30"
+                ]
+            },
+            {
+                "id": 14,
+                "titulo": "Un lío de millones",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    ""
+                ]
+            },
+            {
+                "id": 15,
+                "titulo": "Vaiana 2 (España)",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    ""
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "longitud": "43.25985220413724",
+        "latitud": "-2.9365105746758706",
+        "nombre": "Golem Alhóndiga",
+        "peliculas": []
+    },
+    {
+        "id": 11,
+        "longitud": "43.26160098047478",
+        "latitud": "-2.9452568876519254",
+        "nombre": "Multicines Bilbao",
+        "peliculas": []
+    },
+    {
+        "id": 12,
+        "longitud": "43.26203742741061",
+        "latitud": "-2.930941587651893",
+        "nombre": "Sala BBK",
+        "peliculas": []
+    },
+    {
+        "id": 13,
+        "longitud": "43.2994321100164",
+        "latitud": "-2.8861338207088876",
+        "nombre": "Gurea Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 14,
+        "longitud": "43.169411369610685",
+        "latitud": "-2.630892734206631",
+        "nombre": "Cine Zugaza",
+        "peliculas": []
+    },
+    {
+        "id": 15,
+        "longitud": "43.13017387995804",
+        "latitud": "-2.5434532760210296",
+        "nombre": "Arriola Kultur Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 16,
+        "longitud": "43.18601194672909",
+        "latitud": "-2.5007276884033725",
+        "nombre": "Cinema Ermua",
+        "peliculas": []
+    },
+    {
+        "id": 17,
+        "longitud": "43.23180380779836",
+        "latitud": "-2.844070620712258",
+        "nombre": "Torrezabal Kultur Etxea",
+        "peliculas": []
+    },
+    {
+        "id": 18,
+        "longitud": "43.31521883925767",
+        "latitud": "-2.6767308072168414",
+        "nombre": "Teatro Lizeo Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 19,
+        "longitud": "43.34043741252888",
+        "latitud": "-3.016719780233068",
+        "nombre": "Getxo Zinemak",
+        "peliculas": []
+    },
+    {
+        "id": 20,
+        "longitud": "43.162679051402826",
+        "latitud": "-2.779029363043212",
+        "nombre": "Lasarte Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 21,
+        "longitud": "43.326901251024985",
+        "latitud": "-2.985843749543749",
+        "nombre": "Kultur Leioa Auditorium",
+        "peliculas": []
+    },
+    {
+        "id": 22,
+        "longitud": "43.341555790732784",
+        "latitud": "-2.9883039114380843",
+        "nombre": "Yelmo Cines Artea",
+        "peliculas": []
+    },
+    {
+        "id": 23,
+        "longitud": "43.36359837083945",
+        "latitud": "-2.50586394768819",
+        "nombre": "Cine Ikusgarri",
+        "peliculas": []
+    },
+    {
+        "id": 24,
+        "longitud": "43.35324500414236",
+        "latitud": "-2.8482311630336956",
+        "nombre": "Cine Torrebillela",
+        "peliculas": []
+    },
+    {
+        "id": 25,
+        "longitud": "43.35766990236143",
+        "latitud": "-2.8487968188522146",
+        "nombre": "Olalde Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 26,
+        "longitud": "43.32222755379663",
+        "latitud": "-3.1202692778651553",
+        "nombre": "Meatzari Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 27,
+        "longitud": "43.31195714386655",
+        "latitud": "-3.020057607217005",
+        "nombre": "Dock Cine Ballonti",
+        "peliculas": []
+    },
+    {
+        "id": 28,
+        "longitud": "43.32649222808846",
+        "latitud": "-3.0326842630350317",
+        "nombre": "Serantes Kultur Aretoa",
+        "peliculas": []
+    },
+    {
+        "id": 29,
+        "longitud": "43.29722407100079",
+        "latitud": "-2.9241669881652634",
+        "nombre": "Sondikako Kultur Etxea",
+        "peliculas": []
+    },
+    {
+        "id": 30,
+        "longitud": "43.21220532072922",
+        "latitud": "-3.1366954606719135",
+        "nombre": "Zalla Zine-Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 31,
+        "longitud": "43.21789947017307",
+        "latitud": "-2.0209647648942055",
+        "nombre": "Bastero Kulturgunea",
+        "peliculas": []
+    },
+    {
+        "id": 32,
+        "longitud": "43.06674474179957",
+        "latitud": "-2.486898729989195",
+        "nombre": "Amaia Udal Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 33,
+        "longitud": "43.177850956960135",
+        "latitud": "-2.314274422568686",
+        "nombre": "Baztartxo Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 34,
+        "longitud": "43.047368919494204",
+        "latitud": "-2.1942870783939643",
+        "nombre": "Usurbe Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 35,
+        "longitud": "43.31241817608024",
+        "latitud": "-2.005130936053235",
+        "nombre": "Cines Antiguo Berri",
+        "peliculas": []
+    },
+    {
+        "id": 36,
+        "longitud": "43.32532014955993",
+        "latitud": "-1.98369034954385",
+        "nombre": "Cines Príncipe",
+        "peliculas": []
+    },
+    {
+        "id": 37,
+        "longitud": "43.32246323958202",
+        "latitud": "-1.9741784458364922",
+        "nombre": "Cines Trueba",
+        "peliculas": []
+    },
+    {
+        "id": 38,
+        "longitud": "43.309840981376944",
+        "latitud": "-1.9427876918721285",
+        "nombre": "Garbera Cinesa LUXE",
+        "peliculas": [
+            {
+                "id": 16,
+                "titulo": "Sonic 2, la película",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Sonic_2%2C_la_pel%C3%ADcula_logo.png/220px-Sonic_2%2C_la_pel%C3%ADcula_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 124,
+                "horario": [
+                    ""
+                ]
+            },
+            {
+                "id": 17,
+                "titulo": "Mufasa: el rey león",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mufasa_The_Lion_King_logo.png/220px-Mufasa_The_Lion_King_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 116,
+                "horario": [
+                    "16:00",
+                    "17:00",
+                    "18:00",
+                    "18:45",
+                    "19:45",
+                    "20:45",
+                    "21:30",
+                    "22:30"
+                ]
+            },
+            {
+                "id": 18,
+                "titulo": "Vaiana 2 (España)",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "16:35",
+                    "18:35",
+                    "19:10"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "longitud": "43.18603902158322",
+        "latitud": "-2.4668343574808533",
+        "nombre": "Coliseo Antzokia Eibar",
+        "peliculas": []
+    },
+    {
+        "id": 40,
+        "longitud": "43.21696845914913",
+        "latitud": "-2.409918661186789",
+        "nombre": "Herriko Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 41,
+        "longitud": "43.36770826451416",
+        "latitud": "-1.7920296616943183",
+        "nombre": "Itsas Etxea Auditoriuma",
+        "peliculas": []
+    },
+    {
+        "id": 42,
+        "longitud": "43.340794408959425",
+        "latitud": "-1.7910003072155474",
+        "nombre": "Ocine Mendibil",
+        "peliculas": []
+    },
+    {
+        "id": 43,
+        "longitud": "43.27052621433659",
+        "latitud": "-2.0223666514003207",
+        "nombre": "Manuel Lekuona Kultur Etxea",
+        "peliculas": []
+    },
+    {
+        "id": 44,
+        "longitud": "43.03254054692675",
+        "latitud": "-2.4149002458958053",
+        "nombre": "Oñatiko Zinea",
+        "peliculas": []
+    },
+    {
+        "id": 45,
+        "longitud": "43.05356008632621",
+        "latitud": "-2.178243372317327",
+        "nombre": "Herri Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 46,
+        "longitud": "43.31447439773769",
+        "latitud": "-1.9007075491312317",
+        "nombre": "Cines Niessen",
+        "peliculas": []
+    },
+    {
+        "id": 47,
+        "longitud": "43.13564848031033",
+        "latitud": "-2.0760257667520636",
+        "nombre": "Leidor Zinema",
+        "peliculas": []
+    },
+    {
+        "id": 48,
+        "longitud": "43.2763384614186",
+        "latitud": "-2.024256430493812",
+        "nombre": "Cinesa Urbil",
+        "peliculas": [
+            {
+                "id": 19,
+                "titulo": "Sonic 2, la película",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Sonic_2%2C_la_pel%C3%ADcula_logo.png/220px-Sonic_2%2C_la_pel%C3%ADcula_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 124,
+                "horario": [
+                    ""
+                ]
+            },
+            {
+                "id": 20,
+                "titulo": "Mufasa: el rey león",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mufasa_The_Lion_King_logo.png/220px-Mufasa_The_Lion_King_logo.png",
+                "anchoImagen": 220,
+                "altoImagen": 116,
+                "horario": [
+                    "16:00",
+                    "18:00",
+                    "18:45",
+                    "21:30"
+                ]
+            },
+            {
+                "id": 21,
+                "titulo": "Un lío de millones",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "16:15",
+                    "19:35",
+                    "21:50"
+                ]
+            },
+            {
+                "id": 22,
+                "titulo": "Vaiana 2 (España)",
+                "imagen": null,
+                "anchoImagen": 0,
+                "altoImagen": 0,
+                "horario": [
+                    "16:50",
+                    "18:30",
+                    "19:00"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "longitud": "43.186565939976134",
+        "latitud": "-2.0518629222248235",
+        "nombre": "Gurea Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 50,
+        "longitud": "43.29600370112834",
+        "latitud": "-2.2566355267853746",
+        "nombre": "Aita Mari Zinema",
+        "peliculas": []
+    },
+    {
+        "id": 51,
+        "longitud": "43.089235387569765",
+        "latitud": "-2.314317693736876",
+        "nombre": "Zelai Arizti",
+        "peliculas": []
+    },
+    {
+        "id": 52,
+        "longitud": "43.05505026201502",
+        "latitud": "-2.998527973347462",
+        "nombre": "Amurrio Antzokia",
+        "peliculas": []
+    },
+    {
+        "id": 53,
+        "longitud": "42.91257104484935",
+        "latitud": "-2.716553401222732",
+        "nombre": "Cines Gorbeia",
+        "peliculas": []
+    },
+    {
+        "id": 54,
+        "longitud": "43.147269303970226",
+        "latitud": "-2.9666958979565483",
+        "nombre": "Cine Municipal Llodio",
+        "peliculas": []
+    },
+    {
+        "id": 55,
+        "longitud": "42.843975567654816",
+        "latitud": "-2.6706610072403394",
+        "nombre": "Cines Florida",
+        "peliculas": []
+    },
+    {
+        "id": 56,
+        "longitud": "42.862404304714566",
+        "latitud": "-2.668882730514457",
+        "nombre": "Yelmo Cines Boulevard",
+        "peliculas": []
+    }
+  ]
+}
