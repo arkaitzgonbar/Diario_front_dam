@@ -1,23 +1,26 @@
 <ion-header>
   <ion-toolbar color="dark">
+    <!-- Título de la página -->
     <ion-title>Clasificación de Películas</ion-title>
     <ion-buttons slot="end">
-    
+      <!-- Botón para agregar una nueva clasificación -->
       <ion-button (click)="abrirAgregarClasificacion()">+</ion-button>
-      
+      <!-- Botón para eliminar una clasificación existente -->
       <ion-button (click)="abrirEliminarClasificacion()">-</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- 
+  <!-- Segmento para seleccionar la clasificación activa -->
   <ion-segment [(ngModel)]="segmentoSeleccionado" (ionChange)="cambioSegmento($event)">
+    <!-- Botón del segmento para cada clasificación -->
     <ion-segment-button *ngFor="let clasificacion of clasificaciones" [value]="clasificacion">
       {{ clasificacion }}
     </ion-segment-button>
   </ion-segment>
 
+  <!-- Lista de películas -->
   <div class="movies-list">
     <ion-card class="movie-item" *ngFor="let pelicula of peliculas; let i = index"> 
       <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
@@ -25,11 +28,12 @@
         <div class="movie-details">
           <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
           <div class="buttons-container">
-            
+            <!-- Botones para clasificar la película -->
             <ion-button *ngFor="let clasificacion of clasificaciones" (click)="clasificarPelicula(pelicula, clasificacion)">
               {{ clasificacion }}
             </ion-button>
             
+            <!-- Botón para eliminar la película -->
             <ion-button fill="clear" color="danger" (click)="eliminarPelicula(i)">
               <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-button>
@@ -38,5 +42,4 @@
       </ion-card-content>
     </ion-card>
   </div>
-  
 </ion-content>

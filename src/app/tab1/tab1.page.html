@@ -5,43 +5,44 @@
 </ion-header>
 
 <ion-content>
-
-  <!-- Indicador de carga-->
-  <div class="loading-spinner" *ngIf="isLoading">
+  <!-- Indicador de carga -->
+  <div *ngIf="isLoading" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando películas...</p>
-    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar> <!--La propiedad type indeterminate hace que la animación sea continua -->
+    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
   </div>
- <!-- Contenedor de filtros, se muestra cuando los datos ya están cargados -->
-  <div class="filter-container" *ngIf="!isLoading">
 
-    <!-- Filtro de texto para buscar por título -->
+  <!-- Filtros -->
+  <div *ngIf="!isLoading" class="filter-container">
     <ion-item>
       <ion-label>Título:</ion-label>
-      <ion-input [(ngModel)]="buscarTexto" placeholder="Buscar..."></ion-input>
+      <ion-input [(ngModel)]="buscarTexto" placeholder="Palabra..."></ion-input>
     </ion-item>
 
-    <!-- Filtro por género -->
-    <ion-label>Género:</ion-label>
-    <ion-item class="genre-item">
-     
+    <ion-item>
+      <ion-label>Género:</ion-label>
       <ion-select [(ngModel)]="generoSeleccionado" interface="popover">
-        <ion-select-option value="">Todos</ion-select-option>
+        <ion-select-option value= "null">Todos</ion-select-option> 
         <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
       </ion-select>
     </ion-item>
-    <!-- Filtro por año de lanzamiento -->
+
     <ion-item>
-      <ion-label>Año</ion-label>
+      <ion-label>Reparto:</ion-label>
+      <ion-input [(ngModel)]="buscarReparto" placeholder="Actor/Actriz..."></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Año:</ion-label>
       <ion-input type="number" [(ngModel)]="FechaLanzamiento" placeholder="Año"></ion-input>
     </ion-item>
 
-    <ion-button color="primary" (click)="filtrar()">Buscar</ion-button>
+    <ion-button color="primary" (click)="aplicarFiltros()">Buscar</ion-button>
   </div>
 
-   <!-- Grid de películas, muestra las películas filtradas en ion-cards -->
+  <!-- Grid de películas -->
   <div class="movies-grid">
-    <ion-card *ngFor="let pelicula of peliculasFiltradas" 
+    <ion-card *ngFor="let pelicula of peliculasPaginadas" 
               (click)="abrirModal(pelicula)" 
               [ngClass]="{'en-cartelera': pelicula.enCartel === 'true'}">
       <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
@@ -51,4 +52,12 @@
     </ion-card>
   </div>
 
+ <!-- Paginación -->
+<div class="pagination" *ngIf="!isLoading && totalPaginas > 1">
+  <div class="pagination-buttons">
+    <ion-button (click)="paginaAnterior()" [disabled]="paginaActual === 1">← Anterior</ion-button>
+    <span class="pagination-info">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+    <ion-button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">Siguiente →</ion-button>
+  </div>
+</div>
 </ion-content>

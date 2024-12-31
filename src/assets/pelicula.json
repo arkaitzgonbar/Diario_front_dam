@@ -1,0 +1,34 @@
+{
+  "id": 1,
+  "titulo": "The Grudge",
+  "fechaEstreno": 2020,
+  "reparto": [
+    "Robert Downey Jr.",
+    "Antonio Banderas",
+    "Michael Sheen",
+    "Emma Thompson",
+    "Rami Malek",
+    "John Cena",
+    "Kumail Nanjiani",
+    "Octavia Spencer",
+    "Tom Holland",
+    "Craig Robinson",
+    "Ralph Fiennes",
+    "Selena Gomez",
+    "Marion Cotillard"
+  ],
+  "generos": [
+    "Horror",
+    "Supernatural",
+    "Adventure",
+    "Comedy",
+    "Drama",
+    "Family",
+    "Fantasy"
+  ],
+  "href": "The_Grudge_(2020_film)",
+  "resumen": "The Grudge is a 2020 American psychological supernatural horror film written and directed by Nicolas Pesce. Originally announced as a reboot of the 2004 American remake and the original 2002 Japanese horror film Ju-On: The Grudge, the film ended up taking place before and during the events of the 2004 film and its two direct sequels, and is the fourth installment in the American The Grudge film series. The film stars Andrea Riseborough, Demián Bichir, John Cho, Betty Gilpin, Lin Shaye, and Jacki Weaver, and follows a police officer who investigates several murders that are seemingly connected to a single house.",
+  "imagen": "https://upload.wikimedia.org/wikipedia/en/3/34/The_Grudge_2020_Poster.jpeg",
+  "anchoImagen": 220,
+  "altoImagen": 326
+}

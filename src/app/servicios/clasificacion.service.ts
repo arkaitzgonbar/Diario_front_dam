@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
+//import {Lista} from "../mis-interfaces/pelicula";
+import {Cines} from "../mis-interfaces/models";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClasificacionService {
-  // Lista de clasificaciones 
+  // Lista de clasificaciones
   clasificaciones: { [key: string]: any[] } = {
     'Favoritas': [],
     'Interesado': [],
@@ -12,9 +14,12 @@ export class ClasificacionService {
     'Descartado': []
   };
 
+
+
+
   // Estructura para almacenar valoraciones de películas (usando ID como clave)
   private valoraciones: { [key: string]: { total: number; suma: number } } = {};
- 
+
    /**
    * Método para clasificar una película dentro de una lista específica.
    * Si ya existe en otra lista, la elimina primero.
@@ -22,13 +27,13 @@ export class ClasificacionService {
    * @param tipo El tipo de lista al que pertenece.
    */
     clasificar(pelicula: any, tipo: string) {
-           
+
       this.eliminarDeListas(pelicula); // Elimina la película de cualquier lista en la que ya se encuentre
-      
+
       // Añade la película a la lista seleccionada si ésta existe
       if (this.clasificaciones[tipo]) {
-        this.clasificaciones[tipo].push(pelicula); 
-        
+        this.clasificaciones[tipo].push(pelicula);
+
       } else {
         console.warn(`Clasificación ${tipo} no existe`);
       }
@@ -120,6 +125,6 @@ export class ClasificacionService {
       this.valoraciones[idPelicula].total += 1;
       this.valoraciones[idPelicula].suma += valor;
     }
-  
+
 }
 
