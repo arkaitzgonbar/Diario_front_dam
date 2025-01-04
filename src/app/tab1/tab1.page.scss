@@ -30,7 +30,8 @@ ion-content {
   color: #ffffff;
   padding: 1rem;
 }
-/*spinner de carga*/
+
+/* Spinner de carga */
 .loading-spinner {
   display: flex;
   justify-content: center;
@@ -53,14 +54,12 @@ ion-content {
   width: 30%; 
   margin-top: 10px;
 }
+
 /* Contenedor de los filtros */
 .filter-container {
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   gap: 1.5rem;
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap; //Permite que los elementos se muevan a una nueva línea en pantallas pequeñas 
+  flex-wrap: wrap; /* Permite que los elementos se muevan a una nueva línea en pantallas pequeñas */
   align-items: center;
   background-color: #1e1e1e;
   padding: 0.5rem;
@@ -82,17 +81,6 @@ ion-select {
   --placeholder-color-moz: #ffffff88;
 }
 
-/* Ajuste de estilo específico para el filtro de género */
-.genre-item ion-label {
-  margin-right: 1rem;
-}
-
-.genre-item:hover ion-label {
-  color: inherit;
-  background-color: transparent;
-}
-
-/* Ajuste de select e input para que ocupen el mismo espacio */
 ion-input,
 ion-select {
   flex: 1;
@@ -108,12 +96,13 @@ ion-button {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 1rem;
+  padding: 0 1rem; /* Añadido padding a los lados para evitar recorte en pantallas pequeñas */
+  overflow: hidden; /* Evitar el desbordamiento de los elementos */
 }
 
 .movies-grid :hover {
   transform: scale(1.05);
 }
-
 
 /* Efecto para películas en cartelera */
 .en-cartelera {
@@ -128,10 +117,12 @@ ion-button {
   box-shadow: 0 0 15px 6px rgba(255, 204, 0, 0.9); /* Intensifica el brillo */
 }
 
+/* Contenedor de paginación */
 .pagination {
   display: flex;
-  justify-content: center; /* Centra el contenedor de paginación */
-  margin-top: 20px; /* Espacio superior */
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .pagination-buttons {
@@ -144,19 +135,32 @@ ion-button {
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff; /* Texto en blanco */
+  margin-bottom: 5px; /* Espacio entre el texto y la sección de ir a la página */
+}
+
+.page-selector {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 110px; /* Ajuste más preciso para alinear con la P de página */
+}
+
+.page-selector ion-input {
+  width: 80px; /* Ajusta el tamaño del input */
+}
+
+.page-selector ion-label {
+  color: #ffffff;
 }
 
 /* Alternativa para navegadores que no soporten grid */
 @supports not (display: grid) {
   .movies-grid {
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
   }
   .movies-grid > ion-card {
-    -webkit-flex: 1 1 150px;
-    -ms-flex: 1 1 150px;
     flex: 1 1 150px;
   }
 }
@@ -193,8 +197,8 @@ ion-card-title {
   margin: 0.5rem 0;
   font-weight: bold;
   color: #ffffff;
-  white-space: normal; //Divide el texto el lineas
-  overflow-wrap: break-word; //LAs palabras largas se puede dividir
+  white-space: normal; /* Divide el texto en líneas */
+  overflow-wrap: break-word; /* Las palabras largas se pueden dividir */
   word-break: break-word; 
   text-align: center;
   max-width: 100%; 
@@ -224,6 +228,9 @@ ion-card-title {
     gap: 10px; /* Espacio más pequeño entre botones */
   }
 }
+.page-selector {
+  margin-left: 140px; /* Ajuste más preciso para alinear con la P de página */
+}
 
 
 /* Responsividad para pantallas pequeñas */
@@ -244,8 +251,9 @@ ion-card-title {
   ion-card img {
     height: 100px;
   }
+  
   .pagination {
-    flex-direction: row; 
+    flex-direction: column; 
     gap: 10px;
   }
 
@@ -257,5 +265,21 @@ ion-card-title {
   .pagination-buttons {
     gap: 8px; 
   }
+  .page-selector {
+    margin-left: 140px; /* Ajuste más preciso para alinear con la P de página */
+  }
+  ion-item {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: flex-start; 
+    width: 100%; 
+    padding: 0.25rem; 
+  }
 
+  /* Alineación para los labels y inputs dentro de ion-item */
+  ion-label, ion-input, ion-select {
+    color: #ffffff;
+    width: 100%; 
+  }
 }

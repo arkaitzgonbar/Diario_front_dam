@@ -1,3 +1,5 @@
+import {Coordinate} from "ol/coordinate";
+
 export type RouteData = {
   code: string;
   routes: Route[];
@@ -44,3 +46,4 @@ export type Intersection = {
   bearings: number[];
   location: number[];
 };
+

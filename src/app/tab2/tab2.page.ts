@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ClasificacionService } from '../servicios/clasificacion.service';
+import {Component, DestroyRef, inject, Input, OnInit, signal} from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { NuevaClasificacionPage } from '../nueva-clasificacion/nueva-clasificacion.page';
+import {ListaService} from "../servicios/lista.service";
+import {Lista} from "../mis-interfaces/lista";
+import {Pelicula} from "../mis-interfaces/pelicula";
 
 @Component({
   selector: 'app-tab2',
@@ -10,88 +12,149 @@ import { NuevaClasificacionPage } from '../nueva-clasificacion/nueva-clasificaci
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
+  private listaSer = inject(ListaService);
+  private destroy = inject(DestroyRef);
 
-  clasificaciones: string[] = []; // Lista de clasificaciones disponibles
-  peliculas: any[] = []; // Lista de películas clasificadas
-  segmentoSeleccionado: string = ''; // Clasificación seleccionada actualmente
+  listas = signal<Lista[]>([]);
+  selectedlista = signal<Lista|undefined>(undefined);
+
 
   constructor(
-    private clasificacionService: ClasificacionService,
     private modal: ModalController,
     private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.actualizarClasificaciones();
+this.listaSer.loadListas();
+    const subs = this.listaSer.listas$.subscribe({
+      next:(response) => this.listas.set(response)
+    });
+    //Destruye la subscripcion
+    this.destroy.onDestroy(() =>subs.unsubscribe);
+  }
+
+  public onShowMore(id:string){
+    const element = document.getElementById(id);
+    //if(element != null)
+      console.log(element!.attributes);
+      const visible = element!.getAttribute('visible')!;
+      if(visible === 'true'){
+        element!.setAttribute('visible', 'false');
+        element!.style.display = 'none';
+      }
+      else if(visible === 'false'){
+        element!.setAttribute('visible', 'true');
+        element!.style.display = 'flex';
+      }
+
+    console.log(element!.attributes);
   }
 
   /**
-   * Método para obtiener las clasificaciones desde el servicio y filtra las películas por clasificación actual.
+   * Muestra las peliculas de la lista seleccionada
+   * @param listaId
    */
-  actualizarClasificaciones() {
-    this.clasificaciones = this.clasificacionService.obtenerClasificaciones();
-    this.filtrarPeliculasPorClasificacion();
+  public onChangeLista(lista: Lista){
+    this.selectedlista.set(lista);
+    //this.peliculas.set([]);
+    //this.peliculas.set(lista.peliculas);
   }
 
   /**
-   * Método que clasifica una película bajo una categoría específica.
-   * @param pelicula Película que será clasificada.
-   * @param clasificacion Clasificación a aplicar.
+   * Dado el id de una pelicula la elimina de la lista
+   * @param listaId
    */
-  clasificarPelicula(pelicula: any, clasificacion: string) {
-    // Clasificar la película usando el servicio
-    this.clasificacionService.clasificar(pelicula, clasificacion);
-    // Recargar las películas clasificadas
-    this.obtenerPeliculasClasificadas();
+  deletePeliculaFromLista(peliculaId: number) {
+    this.listaSer.deletePeliculaFromLista({
+      listaId: this.selectedlista()!.id,
+      peliculaId: peliculaId
+    });
+  }
+
+  getListasByPelicula(peliculaId:number){
+    //Busca las listas donde no este incluida la pelicula
+    return  this.listas().filter(lista =>{
+      const find = lista.peliculas.find(
+        pelicula => pelicula.id === peliculaId);
+      return find ? false : true;
+    });
   }
 
   /**
-   * Método para filtrar las películas por la clasificación actualmente seleccionada.
+   * Método que clasifica la película en la categoría seleccionada y cierra el modal
+   *
    */
-  filtrarPeliculasPorClasificacion() {
-    if (this.segmentoSeleccionado) {
-      // Obtener las películas clasificadas bajo la categoría seleccionada
-      this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
-    } else {
-      // Si no hay categoría seleccionada, limpiar la lista
-      this.peliculas = [];
-    }
+  addALista(listaId: number, peliculaId: number) {
+    this.listaSer.addPeliculoToLista({
+      listaId: listaId,
+      peliculaId: peliculaId
+    });
+    //this.clasificacion.clasificar(this.pelicula, clasificacion);
+    //this.modalController.dismiss();
   }
+
+
+  // /**
+  //  * Método para obtiener las clasificaciones desde el servicio y filtra las películas por clasificación actual.
+  //  */
+  // actualizarClasificaciones() {
+  //   this.clasificaciones = this.clasificacionService.obtenerClasificaciones();
+  //   this.filtrarPeliculasPorClasificacion();
+  // }
+
+  // /**
+  //  * Método que clasifica una película bajo una categoría específica.
+  //  * @param pelicula Película que será clasificada.
+  //  * @param clasificacion Clasificación a aplicar.
+  //  */
+  // clasificarPelicula(pelicula: any, clasificacion: string) {
+  //   // Clasificar la película usando el servicio
+  //   this.clasificacionService.clasificar(pelicula, clasificacion);
+  //   // Recargar las películas clasificadas
+  //   this.obtenerPeliculasClasificadas();
+  // }
+
+  // /**
+  //  * Método para filtrar las películas por la clasificación actualmente seleccionada.
+  //  */
+  // filtrarPeliculasPorClasificacion() {
+  //   if (this.segmentoSeleccionado) {
+  //     // Obtener las películas clasificadas bajo la categoría seleccionada
+  //     this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
+  //   } else {
+  //     // Si no hay categoría seleccionada, limpiar la lista
+  //     this.peliculas = [];
+  //   }
+  // }
 
   /**
    * Método que elimina una película específica de la lista actual y del servicio.
    * @param index Índice de la película a eliminar.
    */
-  eliminarPelicula(index: number) {
-    if (index >= 0 && index < this.peliculas.length) {
-      this.peliculas = this.peliculas.filter((_, i) => i !== index);
-      // Elimina la película de la clasificación correspondiente en el servicio
-      this.clasificacionService.eliminarPeliculaDeClasificacion(this.segmentoSeleccionado, index);
-    }
-  }
 
-  /**
-   * Método que cambia el segmento seleccionado y actualiza las películas clasificadas.
-   * @param event Evento que contiene el nuevo valor del segmento seleccionado.
-   */
-  cambioSegmento(event: any) {
-    this.segmentoSeleccionado = event.detail.value;
-    this.obtenerPeliculasClasificadas();
-  }
 
-  /**
-   * Método para obtener las películas clasificadas bajo la clasificación seleccionada.
-   */
-  obtenerPeliculasClasificadas() {
-    this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
-  }
+  // /**
+  //  * Método que cambia el segmento seleccionado y actualiza las películas clasificadas.
+  //  * @param event Evento que contiene el nuevo valor del segmento seleccionado.
+  //  */
+  // cambioSegmento(event: any) {
+  //   this.segmentoSeleccionado = event.detail.value;
+  //   this.obtenerPeliculasClasificadas();
+  // }
+
+  // /**
+  //  * Método para obtener las películas clasificadas bajo la clasificación seleccionada.
+  //  */
+  // obtenerPeliculasClasificadas() {
+  //   this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
+  // }
 
   /**
    * Método que abre un alertController para agregar una nueva clasificación.
    */
-  async abrirAgregarClasificacion() {
+  async openAgregarLista() {
     const alert = await this.alertController.create({
-      header: 'Agregar Clasificación',
+      header: 'Agregar Lista',
       cssClass: 'custom-alert',
       inputs: [
         {
@@ -108,15 +171,15 @@ export class Tab2Page implements OnInit {
         {
           text: 'Guardar',
           handler: (data) => {
-            const nuevaClasificacion = data.nuevaClasificacion?.trim();
-            if (nuevaClasificacion) {
+            const nombreLista = data.nuevaClasificacion?.trim();
+            if (  nombreLista ) {
               // Agregar la nueva clasificación al servicio
-              this.clasificacionService.agregarClasificacion(nuevaClasificacion);
-              this.actualizarClasificaciones(); // Actualizar la lista
+              //this.clasificacionService.agregarClasificacion(nuevaClasificacion);
+              this.agregarLista(nombreLista);
+              //this.actualizarClasificaciones(); // Actualizar la lista
               return true;
-            } else {
+            } else
               return false; // No guardar si el texto está vacío
-            }
           }
         }
       ]
@@ -128,14 +191,14 @@ export class Tab2Page implements OnInit {
   /**
    *  Método que abre un alertController para eliminar una clasificación existente.
    */
-  async abrirEliminarClasificacion() {
+  async openEliminarLista() {
     const alert = await this.alertController.create({
       header: 'Eliminar clasificación',
       cssClass: 'custom-alert',
-      inputs: this.clasificaciones.map(clasificacion => ({
+      inputs: this.listas().map(lista => ({
         type: 'radio',
-        label: clasificacion,
-        value: clasificacion
+        label: lista.nombre,
+        value: lista.id
       })),
       buttons: [
         {
@@ -144,10 +207,10 @@ export class Tab2Page implements OnInit {
         },
         {
           text: 'Eliminar',
-          handler: (clasificacion: string) => {
-            if (clasificacion) {
-              // Llama al método para eliminar la clasificación
-              this.eliminarClasificacion(clasificacion);
+          handler: (listaId: number) => {
+            if (listaId) {
+              // Llama al método para eliminar la lista
+              this.eliminarLista(listaId);
             }
           }
         }
@@ -158,11 +221,24 @@ export class Tab2Page implements OnInit {
   }
 
   /**
-   * Método que elimina una clasificación específica del servicio y actualiza la lista.
-   * @param clasificacion Clasificación a eliminar.
+   * Dado el id de una lista elimina la lista
+   * @param listaId
    */
-  eliminarClasificacion(clasificacion: string) {
-    this.clasificacionService.eliminarClasificacion(clasificacion);
-    this.actualizarClasificaciones();
+  eliminarLista(listaId: number) {
+    this.listaSer.deleteLista(listaId);
+    //this.clasificacionService.eliminarClasificacion(clasificacion);
+    //this.actualizarClasificaciones();
+  }
+
+  /**
+   * Dado el nombre de la lista crea una nueva lista con dicho nombre
+   * @param nombre
+   */
+  agregarLista(nombre: string){
+    this.listaSer.addLista({
+      id: -1,
+      nombre:nombre,
+      peliculas:[]
+    });
   }
 }

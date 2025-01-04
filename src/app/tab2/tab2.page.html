@@ -4,42 +4,79 @@
     <ion-title>Clasificación de Películas</ion-title>
     <ion-buttons slot="end">
       <!-- Botón para agregar una nueva clasificación -->
-      <ion-button (click)="abrirAgregarClasificacion()">+</ion-button>
+      <ion-button (click)="openAgregarLista()">+</ion-button>
       <!-- Botón para eliminar una clasificación existente -->
-      <ion-button (click)="abrirEliminarClasificacion()">-</ion-button>
+      <ion-button (click)="openEliminarLista()">-</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Segmento para seleccionar la clasificación activa -->
-  <ion-segment [(ngModel)]="segmentoSeleccionado" (ionChange)="cambioSegmento($event)">
-    <!-- Botón del segmento para cada clasificación -->
-    <ion-segment-button *ngFor="let clasificacion of clasificaciones" [value]="clasificacion">
-      {{ clasificacion }}
-    </ion-segment-button>
-  </ion-segment>
+<!--  &lt;!&ndash; Segmento para seleccionar la clasificación activa &ndash;&gt;-->
+<!--  <ion-segment [(ngModel)]="segmentoSeleccionado">-->
+<!--&lt;!&ndash;    (ionChange)="cambioSegmento($event)">&ndash;&gt;-->
+<!--    &lt;!&ndash; Botón del segmento para cada clasificación &ndash;&gt;-->
+<!--    <ion-segment-button *ngFor="let lista of listas()" (click)="onChangeLista(lista)" >-->
+<!--&lt;!&ndash;      [value]="clasificacion" >&ndash;&gt;-->
+<!--      {{ lista.nombre }}-->
+<!--    </ion-segment-button>-->
+<!--  </ion-segment>-->
+
+  @for (lista of listas(); track lista.id) {
+    <div class="lista-wrapper">
+      <div class="lista">
+        <h3>{{lista.nombre}}</h3>
+        <a (click)="onShowMore('lista'+lista.id)" >
+          <i class="fa-solid fa-circle-plus"></i>
+        </a>
+      </div>
+      <div class="movies-list" id="lista{{lista.id}}" visible="false">
+        @for (pelicula of lista.peliculas; track pelicula.id) {
+          <ion-card class="movie-item">
+            <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
+            <ion-card-content>
+              <div class="movie-details">
+                <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
+                <div class="buttons-container">
+                  <!-- Botón para eliminar la película-->
+                  <ion-button fill="clear" color="danger" (click)="deletePeliculaFromLista(pelicula.id)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+                  <!--Botones para clasificar la película-->
+                  <ion-button *ngFor="let l of getListasByPelicula(pelicula.id)" (click)="addALista(l.id, pelicula.id)">
+                    {{ l.nombre }}
+                  </ion-button>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    </div>
+  }
+
+
 
   <!-- Lista de películas -->
-  <div class="movies-list">
-    <ion-card class="movie-item" *ngFor="let pelicula of peliculas; let i = index"> 
-      <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
-      <ion-card-content>
-        <div class="movie-details">
-          <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
-          <div class="buttons-container">
-            <!-- Botones para clasificar la película -->
-            <ion-button *ngFor="let clasificacion of clasificaciones" (click)="clasificarPelicula(pelicula, clasificacion)">
-              {{ clasificacion }}
-            </ion-button>
-            
-            <!-- Botón para eliminar la película -->
-            <ion-button fill="clear" color="danger" (click)="eliminarPelicula(i)">
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
-            </ion-button>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
+<!--  <div class="movies-list">-->
+<!--    <ion-card class="movie-item" *ngFor="let pelicula of selectedlista()?.peliculas; let i = index">-->
+<!--      <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />-->
+<!--      <ion-card-content>-->
+<!--        <div class="movie-details">-->
+<!--          <ion-card-title>{{ pelicula.titulo }}</ion-card-title>-->
+<!--          <div class="buttons-container">-->
+<!--            &lt;!&ndash; Botones para clasificar la película &ndash;&gt;-->
+<!--&lt;!&ndash;            <ion-button *ngFor="let clasificacion of clasificaciones" (click)="clasificarPelicula(pelicula, clasificacion)">&ndash;&gt;-->
+<!--&lt;!&ndash;              {{ clasificacion }}&ndash;&gt;-->
+<!--&lt;!&ndash;            </ion-button>&ndash;&gt;-->
+
+<!--            &lt;!&ndash; Botón para eliminar la película &ndash;&gt;-->
+<!--            <ion-button fill="clear" color="danger" (click)="deletePeliculaFromLista(pelicula.id)">-->
+<!--              <ion-icon slot="icon-only" name="trash"></ion-icon>-->
+<!--            </ion-button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ion-card-content>-->
+<!--    </ion-card>-->
+<!--  </div>-->
 </ion-content>

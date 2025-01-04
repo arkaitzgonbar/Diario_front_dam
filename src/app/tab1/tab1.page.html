@@ -22,7 +22,7 @@
     <ion-item>
       <ion-label>Género:</ion-label>
       <ion-select [(ngModel)]="generoSeleccionado" interface="popover">
-        <ion-select-option value= "null">Todos</ion-select-option> 
+        <ion-select-option value="null">Todos</ion-select-option>
         <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -42,9 +42,9 @@
 
   <!-- Grid de películas -->
   <div class="movies-grid">
-    <ion-card *ngFor="let pelicula of peliculasPaginadas" 
-              (click)="abrirModal(pelicula)" 
-              [ngClass]="{'en-cartelera': pelicula.enCartel === 'true'}">
+    <ion-card *ngFor="let pelicula of peliculasPaginadas"
+              (click)="abrirModal(pelicula)"
+              [ngClass]="{'en-cartelera': estaEnCartelera(pelicula.id) === 'true'}">
       <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
       <ion-card-header>
         <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
@@ -52,12 +52,18 @@
     </ion-card>
   </div>
 
- <!-- Paginación -->
-<div class="pagination" *ngIf="!isLoading && totalPaginas > 1">
-  <div class="pagination-buttons">
-    <ion-button (click)="paginaAnterior()" [disabled]="paginaActual === 1">← Anterior</ion-button>
-    <span class="pagination-info">Página {{ paginaActual }} de {{ totalPaginas }}</span>
-    <ion-button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">Siguiente →</ion-button>
+  <!-- Paginación -->
+  <div class="pagination" *ngIf="!isLoading && totalPaginas > 1">
+    <div class="pagination-buttons">
+      <ion-button (click)="paginaAnterior()" [disabled]="paginaActual === 1">← Anterior</ion-button>
+      <span class="pagination-info">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+      <ion-button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">Siguiente →</ion-button>
+    </div>
+    <!-- Selector de página específica -->
+    <div class="page-selector">
+      <ion-label>Ir a la página:</ion-label>
+      <ion-input type="number" min="1" [max]="totalPaginas" [(ngModel)]="paginaSeleccionada" placeholder="Número de página"></ion-input>
+      <ion-button (click)="irAPagina()">Ir</ion-button>
+    </div>
   </div>
-</div>
 </ion-content>

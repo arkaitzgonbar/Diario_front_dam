@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, OnInit, OnDestroy, inject, signal} from '@angular/core';
 //import { latLng, tileLayer, Map, marker, icon, Layer, LatLngBounds } from 'leaflet';
 //import * as L from 'leaflet';
-import { CargarPelisService } from '../servicios/cargar-pelis.service';
-import { Cartelera } from '../mis-interfaces/cartelera';
 import { GeoService } from '../servicios/geo.service';
 import {DatosService} from "../servicios/datos.service";
 import {CinesService} from "../servicios/cines.service";

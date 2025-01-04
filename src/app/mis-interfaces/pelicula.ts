@@ -5,11 +5,19 @@ export interface Pelicula {
   generos: string[];
   reparto: string[];
   resumen: string;
-  valoracion:string;
   imagen: string;
   anchoImagen: number;
   altoImagen: number;
-  enCartel : string;
+}
+export interface PeliculaLista{
+  listaId : number;
+  peliculaId:number;
+}
+
+export interface Valoracion{
+  votado: boolean;
+  puntuacion: number;
+  peliculaId:number;
 }
 
 /*
@@ -26,19 +34,6 @@ export interface Pelicula {
   }
     */
 
-export interface Cine{
-  id: number;
-  latitud: string;
-  longitud: string;
-}
-
-export interface Cartelera{
-  id : number;
-  cineId: number;
-  peliculaId: number;
-  horario: string;
-  fecha: Date;
-}
 
 export interface Usuario{
   id : number;
@@ -54,13 +49,4 @@ export interface Votos{
   puntuacion : number;
 }
 
-export interface PeliculaLista{
-  listaId : number;
-  peliculaId:number;
-}
 
-export interface Valoracion{
-  votado: boolean;
-  puntuacion: number;
-  peliculaId:number;
-}

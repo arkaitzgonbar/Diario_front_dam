@@ -40,11 +40,17 @@
   <!-- Sección de valoración -->
   <div class="rating-section">
     <p>Valoración media:</p>
-    <div class="stars">
-      <!-- Mostrar estrellas dinámicamente basado en la valoración -->
-      <ion-icon *ngFor="let star of stars" [name]="star"></ion-icon>
-    </div>
-    <p class="small-text">{{ valoracion()?.puntuacion }} de 5 </p>
+    @if (valoracion()?.puntuacion === -1) {
+      <div>
+        <span> No hay ninguna valoracion</span>
+      </div>
+    } @else {
+      <div class="stars">
+        <!-- Mostrar estrellas dinámicamente basado en la valoración -->
+        <ion-icon *ngFor="let star of stars" [name]="star"></ion-icon>
+      </div>
+      <p class="small-text">{{ valoracion()?.puntuacion }} de 5 </p>
+    }
   </div>
 
   <!-- Botón para valorar la película -->
@@ -52,8 +58,8 @@
 
   <!-- Botones dinámicos para clasificar la película -->
   @for (lista of listas(); track lista.id) {
-    @if (lista.id === listaSeleccionada()) {
-      <ion-button class="seleccionado" disabled>
+    @if (listaSeleccionada().includes(lista.id)) {
+      <ion-button class="seleccionado" (click)="removeDeLista(lista.id)">
         {{ lista.nombre }}
       </ion-button>
     } @else {
@@ -63,7 +69,9 @@
     }
   }
 
+  @if (enCartelera()){
+    <!-- Botón para abrir la ubicación geográfica basada en el título de la película -->
+    <ion-button (click)="abrirGeolocalizacion()">Abrir en Geolocalización</ion-button>
+  }
 
-  <!-- Botón para abrir la ubicación geográfica basada en el título de la película -->
-  <ion-button (click)="abrirGeolocalizacion()">Abrir en Geolocalización</ion-button>
 </ion-content>

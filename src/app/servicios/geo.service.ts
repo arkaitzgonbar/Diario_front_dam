@@ -4,7 +4,6 @@ import {Observable, map} from 'rxjs';
 import {Point} from "ol/geom";
 import {Coordinate} from "ol/coordinate";
 import {transform} from "ol/proj";
-import {Waypoint} from "../mis-interfaces/models";
 import {RouteData} from "../mis-interfaces/ruta";
 
 @Injectable({

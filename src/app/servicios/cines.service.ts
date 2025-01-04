@@ -1,29 +1,23 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
-import {CineCart, Cines, PeliculaCart, PeliculaCines} from "../mis-interfaces/models";
-import ol from "ol/dist/ol";
-import string = ol.string;
-import {Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
-//import {addCines} from '../store/cines.actions';
+import {CineCart, Cines, PeliculaCines} from "../mis-interfaces/cartelera";
 import {toObservable} from '@angular/core/rxjs-interop';
+import {ApiService} from "./api.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class CinesService {
-  private http = inject<HttpClient>(HttpClient);
+  private api = inject<ApiService>(ApiService);
   private datePipe = new DatePipe('en-US');
 
   private cartelera= signal<CineCart[]>([]);
   private todosCines = signal<CineCart[]>([]);
   private peliculas =signal<string[]>([]);
-  //private conPeliculas = signal<boolean>(true);
 
   cartelera$ = toObservable(this.cartelera);
   allPeliculas = this.peliculas.asReadonly();
-  //soloPeliculas = this.conPeliculas.asReadonly();
 
 
 
@@ -40,8 +34,7 @@ export class CinesService {
     }
 
     if(cartelera?.fecha != this.datePipe.transform(new Date(), 'yyyy-MM-dd'))
-
-      this.http.get<Cines>('assets/todos.json')
+      this.api.get(environment.ruta_cine)
         .subscribe({
           next:(response) => {
             this.todosCines.set(response.cines);
@@ -142,7 +135,7 @@ export class CinesService {
    * @param word
    * @returns array de string
    */
-  statesWithWords(word:string): string[]{
+  filmsWithWords(word:string): string[]{
     const values: string[] = [];
     if(this.peliculas().length===0)
       this.obtenerPeliculas();
@@ -158,8 +151,23 @@ export class CinesService {
     return values;
   }
 
-  public  findPelicula(pelicula:string): boolean{
+  /**
+   * Dado un string busca si es el titulo de una pelicula
+   * @param pelicula
+   */
+  public  findPeliculaByName(pelicula:string): boolean{
     return this.peliculas().includes(pelicula);
+  }
+
+  /**
+   *
+   * @param peliculaId
+   */
+  public findPeliculaById(peliculaId: number){
+    const finded =  this.todosCines().find(cine =>
+      cine.peliculas.find(pelicula => pelicula.id === peliculaId)
+    )
+    return finded ? true : false;
   }
 
 

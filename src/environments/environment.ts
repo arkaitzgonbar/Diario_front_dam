@@ -5,12 +5,14 @@
 export const environment = {
   production: false,
   url: '',//'http://localhost:8080',
-  ruta_peliculas: '/api/peliculas',
+  ruta_peliculas: 'assets/movies-2020s-con-enCartel.json', //'/api/peliculas',
   ruta_lista: 'assets/listas.json',//'/api/lista',
   ruta_pelicula_lista: '/api/pelicula_lista',
   ruta_usuarios: '/api/usuarios',
   ruta_valoracion: 'assets/valoracion.json',//'/api/votos',
-  ruta_cine: '/api/cine',
+  ruta_cine: 'assets/todos.json',//'/api/cine',
+  ruta_generos: '/api/peliculas/generos',
+  ruta_buscar: '/api/peliculas/buscar/genero_reparto_fecha_titulo'
 };
 
 /*

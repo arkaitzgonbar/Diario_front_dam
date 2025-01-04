@@ -7,6 +7,7 @@ import {ListaService} from "../servicios/lista.service";
 import {Lista} from "../mis-interfaces/lista";
 import {DatosService} from "../servicios/datos.service";
 import {DataType} from "../mis-interfaces/enums";
+import {CinesService} from "../servicios/cines.service";
 
 @Component({
   selector: 'app-modal',
@@ -17,13 +18,15 @@ export class ModalPage implements  OnInit{
   peliculaSer = inject(PeliculaService);
   listSer = inject(ListaService);
   datosSer = inject(DatosService);
+  cinesSer = inject(CinesService);
 
   @Input() pelicula: any;
 
   //pelicula = input.required<Pelicula>();
   listas = signal<Lista[]>([]);
   valoracion = signal<Valoracion|undefined>(undefined);
-  listaSeleccionada = signal<number>(-1);
+  listaSeleccionada = signal<number[]>([]);
+  enCartelera = signal<boolean>(false);
   //ListasClasificacion: any[] = [];
 
   //valoracionMedia: number = 0;
@@ -43,10 +46,15 @@ export class ModalPage implements  OnInit{
   ngOnInit() {
     this.listSer.loadListas();
     this.peliculaSer.loadValoracion(this.pelicula.id);
+    this.enCartelera.set(
+      this.cinesSer.findPeliculaById(this.pelicula.id)
+    );
     this.listSer.listas$.subscribe({
       next:(response) => {
         this.listas.set(response);
-        this.listSer.getPeliculaLista(this.pelicula.id);
+        this.listaSeleccionada.set(
+          this.listSer.getPeliculaLista(this.pelicula.id)
+        );
       }
     });
 
@@ -71,7 +79,20 @@ export class ModalPage implements  OnInit{
    *
    */
   addALista(listaId: number) {
-    this.listSer.updatePeliculaLista({
+    this.listSer.addPeliculoToLista({
+      listaId: listaId,
+      peliculaId: this.pelicula.id
+    });
+    //this.clasificacion.clasificar(this.pelicula, clasificacion);
+    //this.modalController.dismiss();
+  }
+
+  /**
+   * Método que clasifica la película en la categoría seleccionada y cierra el modal
+   *
+   */
+  removeDeLista(listaId: number) {
+    this.listSer.deletePeliculaFromLista({
       listaId: listaId,
       peliculaId: this.pelicula.id
     });
@@ -102,6 +123,9 @@ export class ModalPage implements  OnInit{
   abrirGeolocalizacion() {
     this.datosSer.updateData(this.pelicula);
     this.datosSer.updateMostrar(DataType.pelicula);
+    this.cinesSer.updateCartelera(
+      this.cinesSer.getCinesByPelicula(this.pelicula.titulo)
+    );
     this.router.navigate(['/mi-app/cines-cercanos']);
     this.modalController.dismiss();
   }

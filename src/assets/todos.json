@@ -21,6 +21,16 @@
         "latitud": "-3.0070976109257153",
         "nombre": "Cinesa Max Ocio",
         "peliculas": [
+          {
+            "id": 1,
+            "titulo": "The Grudge",
+            "imagen": "https://upload.wikimedia.org/wikipedia/en/3/34/The_Grudge_2020_Poster.jpeg",
+            "anchoImagen": 220,
+            "altoImagen": 326,
+            "horario": [
+              ""
+            ]
+          },
             {
                 "id": 4,
                 "titulo": "Sonic 2, la película",
@@ -28,7 +38,9 @@
                 "anchoImagen": 220,
                 "altoImagen": 124,
                 "horario": [
-                    ""
+                  "17:00",
+                  "19:45",
+                  "22:30"
                 ]
             },
             {

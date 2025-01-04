@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {CinesService} from "../servicios/cines.service";
 //import {Store} from "@ngrx/store";
 import {DatosService} from "../servicios/datos.service";
@@ -7,7 +7,6 @@ import {Feature, Geolocation, Map, View} from "ol";
 import VectorLayer from "ol/layer/Vector";
 import {OSM, Vector} from "ol/source";
 import Toggle from "ol-ext/control/Toggle";
-import {CineCart, PeliculaCart} from "../../../../proyecto/src/app/mis-interfaces/models";
 import Bar from "ol-ext/control/Bar";
 import Zoom from "ol/control/Zoom";
 import TileLayer from "ol/layer/Tile";
@@ -20,6 +19,7 @@ import CircleStyle from "ol/style/Circle";
 import {transform} from "ol/proj";
 import {DataType} from "../mis-interfaces/enums";
 import Hover from "ol-ext/interaction/Hover";
+import {CineCart} from "../mis-interfaces/cartelera";
 
 @Component({
   selector: 'app-map',
@@ -110,12 +110,17 @@ export class MapComponent  implements OnInit {
       className:'location',
       title: 'Ubicacion Actual',
       onToggle: ((active) =>{
-        if(active)
+        if(active){
           this.mostrarLocalizacion();
+          if(this.selectedCine())
+            this.routeToggle.setVisible(true);
+        }
+
         else{
           this.vector.removeFeature(this.location);
           this.geolocation = new Geolocation();
           this.routeToggle.setVisible(false);
+          this.routeToggle.setActive(false);
           this.resetRuta();
         }
       }),
@@ -128,6 +133,7 @@ export class MapComponent  implements OnInit {
         if(active){
           if(!this.locationToggle.getActive())
             this.routeToggle.setActive(false);
+          else
             this.calcularRuta();
         }
         else
@@ -271,12 +277,16 @@ export class MapComponent  implements OnInit {
           this.datosSer.updateData(
             this.cineSer.getCineByid(feature.get('cine_id'))!
           );
-          this.routeToggle.setVisible(true);
+          if(this.locationToggle.getActive())
+            this.routeToggle.setVisible(true);
         }
         return feature;
       });
       if(feature === undefined && this.routeLayer === undefined){
         this.updateStyle(this.vector.getFeatures(), false);
+        this.selectedCine.set(undefined);
+        this.datosSer.updateMostrar(DataType.nada);
+        this.routeToggle.setVisible(false);
 
       }
     });
