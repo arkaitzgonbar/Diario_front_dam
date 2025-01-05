@@ -34,14 +34,38 @@ export class Tab1Page implements OnInit {
   constructor(private modal: ModalController) {}
 
   ngOnInit() {
+    //this.cinesSer.loadCartelera();
     this.cargaPeliculas();
+    //this.cargaCartelera();
+    this.actualizarGeneros();
+    
   }
 
+  /**
+   * Carga las peliculas en cartelera
+   */
+  cargaCartelera(){
+    this.isLoading = true;
+    this.peliculasSer.getCartelera().pipe(delay(0)).subscribe(data => {
+      this.peliculasFiltradas = data;
+      this.isLoading = false;
+      this.paginaActual = 1;
+      this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
+      this.cargarPagina();
+    }, error => {
+      console.error("Error cargando cartelera", error);
+      this.isLoading = false;
+    });
+  }
+
+  /**
+   * Carga TODAS las peliculas
+   */
   cargaPeliculas() {
     this.isLoading = true;
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
-      this.actualizarGeneros();
+      this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);

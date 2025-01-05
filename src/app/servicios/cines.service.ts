@@ -37,13 +37,15 @@ export class CinesService {
       this.api.get(environment.ruta_cine)
         .subscribe({
           next:(response) => {
-            this.todosCines.set(response.cines);
-            this.updateCartelera(response.cines);
-            localStorage.setItem('cartelera', JSON.stringify(response));
+            this.todosCines.set(response);
+            this.updateCartelera(response);
+            //localStorage.setItem('cartelera', JSON.stringify(response));
             this.obtenerPeliculas();
+            console.log(response);
           },
-          error:((e)=>console.log("ERROR"))
+          error:((e)=>console.log("ERROR " + e))
         });
+
   }
 
 

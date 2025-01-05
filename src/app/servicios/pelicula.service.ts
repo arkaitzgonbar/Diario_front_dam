@@ -34,6 +34,13 @@ export class PeliculaService {
     //return this.http.get<string[]>(this.apiUrl + "api/peliculas/generos");
   }
 
+  /***
+   * Carga las peliculas en cartelera para enseñar al inicio de la aplicacion
+   */
+  getCartelera():Observable<Pelicula[]>{
+    return this.api.get(environment.ruta_pelicula_lista);
+  }
+
   /**
    * Llama al metodo de busqueda de peliculas por parametro de la API
    * @param genero
