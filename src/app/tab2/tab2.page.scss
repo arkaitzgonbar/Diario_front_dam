@@ -91,6 +91,29 @@ ion-button {
   overflow-x: auto;
 }
 
+/* Estilo de la lista y sus elementos */
+.lista {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lista h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.lista a {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.lista-wrapper {
+  margin-bottom: 1rem;
+}
+
 /* Media Query para pantallas pequeñas */
 @media (max-width: 1024px) {
   .movie-item {

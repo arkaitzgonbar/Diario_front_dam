@@ -1,4 +1,3 @@
-
 .tarjeta {
   background-color: #1e1e1e;
 }
@@ -47,13 +46,13 @@ img {
 /* Contenedor de botones */
 .botones-container {
   display: flex;
-  flex-wrap: wrap; //los botones se ajusten automáticamente
+  flex-wrap: wrap; // Los botones se ajusten automáticamente
   justify-content: center;
-  gap: 1rem; //Espacio entre los botones
+  gap: 1rem; // Espacio entre los botones
 
   /* Diseño en columna para pantallas pequeñas */
   @media (max-width: 767px) {
-    flex-direction: column; //Botones en columna
+    flex-direction: column; // Botones en columna
     align-items: center;
   }
 }
@@ -64,28 +63,35 @@ img {
   --color: #ffffff;
   max-width: 250px;
   width: auto;
-  margin: 0 auto; //Centrar botones horizontalmente
+  margin: 0 auto; // Centrar botones horizontalmente
 
   /* Hover effect */
   &:hover {
     --background: #0056b3;
   }
 }
-.seleccionado{
-  --background: #007bff;
-  --color: #008000FF;
+
+/* Botón para lista seleccionada (fondo verde, texto blanco) */
+.seleccionado {
+  --background: #008000; /* Verde */
+  --color: #ffffff; /* Blanco */
   max-width: 250px;
   width: auto;
-  margin: 0 auto; //Centrar botones horizontalmente
+  margin: 0 auto; // Centrar botones horizontalmente
+
+  /* Hover effect */
+  &:hover {
+    --background: #006400; /* Verde más oscuro */
+  }
 }
 
-//Ajuste del contenido de texto
+// Ajuste del contenido de texto
 p {
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 0.5rem;
 
-  //Texto más grande en pantallas grandes
+  // Texto más grande en pantallas grandes
   @media (min-width: 768px) {
     font-size: 1.1rem;
   }
@@ -94,7 +100,7 @@ p {
 ion-title {
   font-size: 1.2rem;
 
-  //Agrandar el título en pantallas más grandes
+  // Agrandar el título en pantallas más grandes
   @media (min-width: 768px) {
     font-size: 1.5rem;
   }
