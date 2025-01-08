@@ -16,7 +16,7 @@ export class ApiService {
    * @param url
    */
   public get(url: string): Observable<any>{
-    return this.http.get(environment.url + url);
+    return this.http.get(environment.url + url, {responseType: 'text'});
   }
 
   /**
