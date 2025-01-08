@@ -39,7 +39,7 @@ export class CinesService {
           next:(response) => {
             this.todosCines.set(response);
             this.updateCartelera(response);
-            //localStorage.setItem('cartelera', JSON.stringify(response));
+            localStorage.setItem('cartelera', JSON.stringify(response));
             this.obtenerPeliculas();
             console.log(response);
           },

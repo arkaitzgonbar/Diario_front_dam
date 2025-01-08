@@ -2,8 +2,8 @@ export interface Pelicula {
   id : number;
   titulo: string;
   fechaEstreno: number;
-  generos: string[];
-  reparto: string[];
+  genero: string;
+  reparto: string;
   resumen: string;
   imagen: string;
   anchoImagen: number;
@@ -16,8 +16,9 @@ export interface PeliculaLista{
 
 export interface Valoracion{
   votado: boolean;
-  puntuacion: number;
   peliculaId:number;
+  //usuarioId:number; //Si descomentamos da error en modal
+  puntuacion: number;
 }
 
 /*

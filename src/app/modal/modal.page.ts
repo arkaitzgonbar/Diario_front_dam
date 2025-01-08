@@ -22,6 +22,9 @@ export class ModalPage implements  OnInit{
 
   @Input() pelicula: any;
 
+  //Array de generos para hacer el toglebar
+  listaGeneros: string[] = [];
+
   //pelicula = input.required<Pelicula>();
   listas = signal<Lista[]>([]);
   valoracion = signal<Valoracion|undefined>(undefined);
@@ -45,7 +48,7 @@ export class ModalPage implements  OnInit{
 
   ngOnInit() {
     this.listSer.loadListas();
-    this.peliculaSer.loadValoracion(this.pelicula.id);
+    //this.peliculaSer.loadValoracion(this.pelicula.id);
     this.enCartelera.set(
       this.cinesSer.findPeliculaById(this.pelicula.id)
     );
@@ -195,8 +198,8 @@ export class ModalPage implements  OnInit{
             // Condición que valida que la valoración esté entre 0 y 5
             if (!isNaN(valor) && valor >= 0 && valor <= 5) {
               this.peliculaSer.addValoracion({
-                puntuacion: valor,
                 peliculaId: this.pelicula.id,
+                puntuacion: valor,
                 votado:true
               });
               //this.clasificacion.guardarValoracion(this.pelicula.id, valor); // Guarda la valoración en el servicio

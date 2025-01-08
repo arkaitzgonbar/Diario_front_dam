@@ -11,7 +11,7 @@ export const environment = {
   ruta_pelicula_lista: /*'/api/pelicula_lista'*/'/api/cartelera/pelisCartel',
   ruta_usuarios: '/api/usuarios',
   ruta_valoracion: 'assets/valoracion.json',//'/api/votos',
-  ruta_cine: /*'assets/todos.json',*/'/api/cine',
+  ruta_cine: 'assets/todos.json',//'/api/cine',
   ruta_generos: '/api/peliculas/generos',
   ruta_buscar: '/api/peliculas/buscar/genero_reparto_fecha_titulo'
 };

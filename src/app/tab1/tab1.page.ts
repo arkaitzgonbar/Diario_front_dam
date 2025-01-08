@@ -52,7 +52,6 @@ export class Tab1Page implements OnInit {
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
       this.cargarPagina();
-      console.log("Cartelera: " + this.peliculasFiltradas)
     }, error => {
       console.error("Error cargando cartelera", error);
       this.isLoading = false;

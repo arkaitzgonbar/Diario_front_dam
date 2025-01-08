@@ -13,24 +13,24 @@
 <ion-content>
   <img [src]="pelicula.imagen" />
   <p><strong>Año:</strong> {{ pelicula.fechaEstreno }}</p>
-  <p><strong>Reparto:</strong> {{ pelicula.reparto.join(', ') }}</p>
+  <p><strong>Reparto:</strong> {{ pelicula.reparto}}</p>
 
   <!-- Lista de géneros -->
   <p>
     <strong>Géneros:</strong>
     <!-- Mostrar solo los primeros 2 géneros, con opción de expandir -->
-    <span *ngIf="pelicula.generos.length > 2 && !verGeneros">
-      {{ pelicula.generos.slice(0, 2).join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length > 2 && !verGeneros">
+      {{ pelicula.genero.split(', ').slice(0, 2)}}
       <ion-icon name="add-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
     </span>
     <!-- Mostrar todos los géneros si están expandidos -->
-    <span *ngIf="pelicula.generos.length > 2 && verGeneros">
-      {{ pelicula.generos.join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length > 2 && verGeneros">
+      {{ pelicula.genero.split(', ') }}
       <ion-icon name="remove-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
     </span>
     <!-- Mostrar todos los géneros si hay 2 o menos -->
-    <span *ngIf="pelicula.generos.length <= 2">
-      {{ pelicula.generos.join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length <= 2">
+      {{ pelicula.genero}}
     </span>
   </p>
 

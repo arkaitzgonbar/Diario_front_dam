@@ -21,7 +21,6 @@ export class PeliculaService {
    * Permite obtener todas las películas desde la api
    */
   getPeliculas(): Observable<Pelicula[]> {
-    console.log("ruta pelicula: " + environment.ruta_peliculas)
     return this.api.get(environment.ruta_peliculas);
     //return this.http.get<Pelicula[]>(this.apiUrl + "api/peliculas");
   }
@@ -82,7 +81,7 @@ export class PeliculaService {
     this.api.get(url)
       .subscribe({
         next:(response:Valoracion) => {
-          console.log()
+          console.log(response)
           this.valoracion.set(response);
         },
         error:((e)=>console.log("ERRORVAL"+e))
