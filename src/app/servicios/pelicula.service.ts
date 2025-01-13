@@ -4,6 +4,7 @@ import {toObservable} from "@angular/core/rxjs-interop";
 import {ApiService} from "./api.service";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Observable} from "rxjs";
 export class PeliculaService {
   private api = inject(ApiService);
 
+  private alertController = inject(AlertController);
   private valoracion = signal<Valoracion|undefined>(undefined);
 
   valoracion$ = toObservable(this.valoracion);
@@ -21,7 +23,7 @@ export class PeliculaService {
    * Permite obtener todas las películas desde la api
    */
   getPeliculas(): Observable<Pelicula[]> {
-    return this.api.get(environment.ruta_peliculas);
+    return this.api.get<Pelicula[]>(environment.ruta_peliculas);
     //return this.http.get<Pelicula[]>(this.apiUrl + "api/peliculas");
   }
 
@@ -30,7 +32,7 @@ export class PeliculaService {
    * Metodo que carga los generos mediante el endpoint de la API
    */
   cargaGeneros(): Observable<string[]> {
-    return this.api.get(environment.ruta_generos);
+    return this.api.get<string[]>(environment.ruta_generos);
     //return this.http.get<string[]>(this.apiUrl + "api/peliculas/generos");
   }
 
@@ -38,7 +40,7 @@ export class PeliculaService {
    * Carga las peliculas en cartelera para enseñar al inicio de la aplicacion
    */
   getCartelera():Observable<Pelicula[]>{
-    return this.api.get(environment.ruta_pelicula_lista);
+    return this.api.get<Pelicula[]>(environment.peliculas_cartelera);
   }
 
   /**
@@ -69,7 +71,7 @@ export class PeliculaService {
       values.push("titulo=" + titulo);
 
     const filtros = values.join('&');
-    return this.api.get(environment.ruta_buscar + '?' + filtros);
+    return this.api.get<Pelicula[]>(environment.ruta_buscar + '?' + filtros);
   }
 
   /**
@@ -78,27 +80,49 @@ export class PeliculaService {
    */
   public loadValoracion(pelicula:number){
     const url = environment.ruta_valoracion + '/' + pelicula
+    console.log(url);
     this.api.get(url)
       .subscribe({
         next:(response:Valoracion) => {
-          console.log(response)
+          console.log("Respuesta recibida:", response);
           this.valoracion.set(response);
         },
         error:((e)=>console.log("ERRORVAL"+e))
       });
   }
 
+
   /**
    * Añade la valoracion
    * @param valoracion
    */
   public addValoracion(valoracion: Valoracion){
+    //console.log("Votado: " + valoracion.votado);
+    //console.log(valoracion);
+    //if(valoracion.votado == false){
+
     this.api.post(environment.ruta_valoracion, valoracion)
       .subscribe({
         next:(response:Valoracion) => {
           this.valoracion.set(response);
+          console.log("ValoracionDTO: " + valoracion.puntuacion);
+          console.log(response);
         },
-        error:((e)=>console.log("ERROR"))
+        error:((e)=>console.log("ERROR añadiendo valoracion"))
       });
+    /*}else{
+      this.presentAlert();
+      console.log("Ya has votado esta pelicula")
+    }*/
+
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Aviso',
+      message: 'No puedes votar porque ya has votado esta película.',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

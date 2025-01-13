@@ -55,7 +55,6 @@ export class MapComponent  implements OnInit {
 
      this.cineSer.cartelera$.subscribe({
        next:(data) =>{
-         console.log("SUBSS");
          console.log(data);
          this.cines.set(data);
          this.generateCines(this.cines());
@@ -131,7 +130,7 @@ export class MapComponent  implements OnInit {
       title:'Trazar la ruta',
       onToggle:((active) =>{
         if(active){
-          if(!this.locationToggle.getActive())
+          if(!this.geolocation.getPosition() || ! this.selectedCine())
             this.routeToggle.setActive(false);
           else
             this.calcularRuta();
@@ -152,83 +151,87 @@ export class MapComponent  implements OnInit {
    */
   private calcularRuta(){
      let cineF :any;
+     const posicion = this.geolocation.getPosition()
+     if( posicion){
        this.vector.getFeatures().forEach(f =>{
-       if(f.get('cine_id')){
-         if (f.get('cine_id') !== this.selectedCine()?.id)
-           this.vector.removeFeature(f);
-         else
-           cineF = f;
-       }
-     });
-
-     if(cineF instanceof  Feature) {
-       const cine = this.cineSer.getCineByid(cineF.get('cine_id'));
-
-       this.geoSer.ruta(
-         this.geolocation.getPosition()!,
-         [cine!.latitud, cine!.longitud]
-       ).subscribe({
-         next:(data) =>{
-           const route = new Polyline({
-             factor:1e5
-           }).readGeometry(data,{
-             dataProjection: 'EPSG:4326',
-             featureProjection: 'EPSG:3857'
-           });
-
-           const routeFeature = new Feature({
-             type: 'route',
-             geometry: route,
-           });
-           const startMarker = new Feature({
-             type: 'icon',
-             geometry: new Point(this.geolocation.getPosition()!),
-           });
-           const endMarker = new Feature({
-             type: 'icon',
-             geometry: new Point([cine!.latitud, cine!.longitud]),
-           });
-           const position = startMarker.getGeometry()!.clone();
-           const geoMarker = new Feature({
-             type: 'geoMarker',
-             geometry: position,
-           });
-
-           const styles: { [key: string]: Style } = {
-             'route': new Style({
-               stroke: new Stroke({
-                 width: 6,
-                 color: [237, 212, 0, 0.8],
-               }),
-             }),
-             'icon': new Style({
-               image: new Icon({
-                 anchor: [0.5, 1],
-                 src: 'data/icon.png',
-               }),
-             }),
-             'geoMarker': new Style({
-               image: new CircleStyle({
-                 radius: 7,
-                 fill: new Fill({color: 'black'}),
-                 stroke: new Stroke({
-                   color: 'white',
-                   width: 2,
-                 }),
-               }),
-             }),
-           };
-
-           this.routeLayer = new VectorLayer({
-             source: new VectorSource({
-               features: [routeFeature, geoMarker, startMarker, endMarker],
-             }),
-             style:  (feature)=> styles[feature.get('type')],
-           });
-           this.map.addLayer(this.routeLayer);
+         if(f.get('cine_id')){
+           if (f.get('cine_id') !== this.selectedCine()?.id)
+             this.vector.removeFeature(f);
+           else
+             cineF = f;
          }
        });
+
+       if(cineF instanceof  Feature) {
+         const cine = this.cineSer.getCineByid(cineF.get('cine_id'));
+
+         this.geoSer.ruta(
+           posicion,
+           [cine!.latitud, cine!.longitud]
+         ).subscribe({
+           next:(data) =>{
+             const route = new Polyline({
+               factor:1e5
+             }).readGeometry(data,{
+               dataProjection: 'EPSG:4326',
+               featureProjection: 'EPSG:3857'
+             });
+
+             const routeFeature = new Feature({
+               type: 'route',
+               geometry: route,
+             });
+             const startMarker = new Feature({
+               type: 'icon',
+               geometry: new Point(this.geolocation.getPosition()!),
+             });
+             const endMarker = new Feature({
+               type: 'icon',
+               geometry: new Point([cine!.latitud, cine!.longitud]),
+             });
+             const position = startMarker.getGeometry()!.clone();
+             const geoMarker = new Feature({
+               type: 'geoMarker',
+               geometry: position,
+             });
+
+             const styles: { [key: string]: Style } = {
+               'route': new Style({
+                 stroke: new Stroke({
+                   width: 6,
+                   color: [237, 212, 0, 0.8],
+                 }),
+               }),
+               'icon': new Style({
+                 image: new Icon({
+                   anchor: [0.5, 1],
+                   src: 'data/icon.png',
+                 }),
+               }),
+               'geoMarker': new Style({
+                 image: new CircleStyle({
+                   radius: 7,
+                   fill: new Fill({color: 'black'}),
+                   stroke: new Stroke({
+                     color: 'white',
+                     width: 2,
+                   }),
+                 }),
+               }),
+             };
+
+             this.routeLayer = new VectorLayer({
+               source: new VectorSource({
+                 features: [routeFeature, geoMarker, startMarker, endMarker],
+               }),
+               style:  (feature)=> styles[feature.get('type')],
+             });
+             this.map.addLayer(this.routeLayer);
+           }
+         });
+       }
      }
+
   }
 
   /**

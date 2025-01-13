@@ -1,13 +1,16 @@
 .map-container{
   /*width: 90%;*/
   width: 100%;
-  height: 300px;
-  border-color: red;
+  height: 800px;
+  //border-color: red;
   margin: auto;
   margin-left: 5px;
+  //overflow: scroll;
 }
 .map-content{
   position: relative;
+  //height: 800px;
+  //overflow: scroll;
 
 }
 

@@ -1,3 +1,4 @@
+import { PeliculaLista } from './../mis-interfaces/pelicula';
 import {Component, inject, Input, input, OnInit, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
@@ -32,6 +33,7 @@ export class ModalPage implements  OnInit{
   enCartelera = signal<boolean>(false);
   //ListasClasificacion: any[] = [];
 
+  estaVotado: boolean = false;
   //valoracionMedia: number = 0;
   //numeroValoraciones: number = 0;
   stars: string[] = []; // Array que representa visualmente las estrellas de valoración
@@ -48,7 +50,7 @@ export class ModalPage implements  OnInit{
 
   ngOnInit() {
     this.listSer.loadListas();
-    //this.peliculaSer.loadValoracion(this.pelicula.id);
+    this.peliculaSer.loadValoracion(this.pelicula.id);
     this.enCartelera.set(
       this.cinesSer.findPeliculaById(this.pelicula.id)
     );
@@ -65,6 +67,14 @@ export class ModalPage implements  OnInit{
       next:(response) => {
         this.valoracion.set(response);
         this.actualizarEstrellas();
+
+        // Comprueba si la pelicula ha sido votada por el usuario
+        if(response?.votado){
+          this.estaVotado = true;
+        }else{
+          this.estaVotado = false;
+        }
+        console.log("Esta votado: " + this.estaVotado);
       }
     });
   }
@@ -77,7 +87,7 @@ export class ModalPage implements  OnInit{
     //this.ListasClasificacion = this.clasificacion.obtenerClasificaciones();
   }
 
- /**
+  /**
    * Método que clasifica la película en la categoría seleccionada y cierra el modal
    *
    */
@@ -133,7 +143,7 @@ export class ModalPage implements  OnInit{
     this.modalController.dismiss();
   }
 
-   /**
+  /**
    * Metodo que obtiene la valoración promedio y el número total de valoraciones desde el servicio
    *
    */
@@ -165,10 +175,8 @@ export class ModalPage implements  OnInit{
     }
   }
 
-   /**
-   * Metodo que genera unalertcontroller para que el usuario introduzca una valoración
-   *
-   */
+
+
   async valorarPelicula() {
     const alert = await this.alertController.create({
       header: 'Introduce tu valoración',
@@ -215,7 +223,17 @@ export class ModalPage implements  OnInit{
     await alert.present();
   }
 
-   /**
+
+  async alertaVotado() {
+    console.log("ALertaVotado ejecutado")
+    const alert = await this.alertController.create({
+      header: 'Aviso',
+      message: 'No puedes votar porque ya has votado esta película.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+  /**
    * Método que muestra un mensaje de error cuando la valoración introducida no es válida
    *
    */

@@ -38,7 +38,7 @@ export class Tab1Page implements OnInit {
     this.cargaPeliculas();
     //this.cargaCartelera();
     this.actualizarGeneros();
-    
+
   }
 
   /**
@@ -48,10 +48,17 @@ export class Tab1Page implements OnInit {
     this.isLoading = true;
     this.peliculasSer.getCartelera().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
+      this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno);
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
       this.cargarPagina();
+      console.log("Tamaño Peliculas filtradas: " + this.peliculasFiltradas.length);
+      if (Array.isArray(this.peliculasFiltradas)) {
+        console.log("Filtradas Es un array");
+      } else {
+        console.log("Filtradas No es un array");
+      }
     }, error => {
       console.error("Error cargando cartelera", error);
       this.isLoading = false;
@@ -66,10 +73,17 @@ export class Tab1Page implements OnInit {
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
       this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
+      console.log("Peliculas ordenadas");
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
       this.cargarPagina();
+      if (Array.isArray(this.peliculasFiltradas)) {
+        console.log("Filtradas Es un array");
+      } else {
+        console.log("Filtradas No es un array");
+      }
+      console.log("Tamaño Peliculas filtradas: " + this.peliculasFiltradas.length);
     }, error => {
       console.error("Error cargando películas", error);
       this.isLoading = false;
@@ -82,6 +96,8 @@ export class Tab1Page implements OnInit {
       this.peliculasSer.buscarPeliculas(this.generoSeleccionado, this.buscarReparto, this.FechaLanzamiento, this.buscarTexto).pipe(delay(0)).subscribe(
         (response) => {
           this.peliculasFiltradas = response;
+          this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
+          console.log("Peliculas ordenadas");
           this.isLoading = false;
           this.paginaActual = 1;
           this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
@@ -100,6 +116,8 @@ export class Tab1Page implements OnInit {
     const inicio = (this.paginaActual - 1) * this.tamanoPagina;
     const fin = inicio + this.tamanoPagina;
     this.peliculasPaginadas = this.peliculasFiltradas.slice(inicio, fin);
+    console.log("Peliculas paginadas: " + this.peliculasPaginadas);
+    console.log("Tamaño peliculasPaginadas: " + this.peliculasPaginadas.length);
   }
 
   paginaSiguiente() {
@@ -130,7 +148,15 @@ export class Tab1Page implements OnInit {
   actualizarGeneros() {
     this.peliculasSer.cargaGeneros().subscribe(
       (response) => {
+        console.log("Respuesta: " + response);
         this.generos = response.sort();
+        console.log("tamaño generos: " + this.generos.length);
+        console.log("generos: " + this.generos);
+        if (Array.isArray(this.generos)) {
+          console.log("Genero Es un array");
+        } else {
+          console.log("Genero No es un array");
+        }
       },
       (error) => {
         console.error('Error al obtener los géneros:', error);

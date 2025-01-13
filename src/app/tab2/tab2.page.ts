@@ -25,7 +25,7 @@ export class Tab2Page implements OnInit {
   ) {}
 
   ngOnInit() {
-this.listaSer.loadListas();
+    this.listaSer.loadListas();
     const subs = this.listaSer.listas$.subscribe({
       next:(response) => this.listas.set(response)
     });
@@ -35,17 +35,22 @@ this.listaSer.loadListas();
 
   public onShowMore(id:string){
     const element = document.getElementById(id);
+
     //if(element != null)
-      console.log(element!.attributes);
-      const visible = element!.getAttribute('visible')!;
-      if(visible === 'true'){
-        element!.setAttribute('visible', 'false');
-        element!.style.display = 'none';
-      }
-      else if(visible === 'false'){
-        element!.setAttribute('visible', 'true');
-        element!.style.display = 'flex';
-      }
+    let resultado = id.replace("lista", ""); //Sacamos el id de la lista
+    const intId: number = Number(resultado); //Pasamos a number el string con el id
+    console.log("ID: " + intId);
+    const listaPrueba: Lista = this.listas().find(lista => lista.id === intId)!;    this.onChangeLista(listaPrueba);
+    //console.log(this.selectedlista());
+    const visible = element!.getAttribute('visible')!;
+    if(visible === 'true'){
+      element!.setAttribute('visible', 'false');
+      element!.style.display = 'none';
+    }
+    else if(visible === 'false'){
+      element!.setAttribute('visible', 'true');
+      element!.style.display = 'flex';
+    }
 
     console.log(element!.attributes);
   }
@@ -56,6 +61,8 @@ this.listaSer.loadListas();
    */
   public onChangeLista(lista: Lista){
     this.selectedlista.set(lista);
+    console.log("lista Change:");
+    console.log(lista);
     //this.peliculas.set([]);
     //this.peliculas.set(lista.peliculas);
   }
@@ -65,6 +72,8 @@ this.listaSer.loadListas();
    * @param listaId
    */
   deletePeliculaFromLista(peliculaId: number) {
+    console.log("Lista seleccionada:")
+    console.log(this.selectedlista());
     this.listaSer.deletePeliculaFromLista({
       listaId: this.selectedlista()!.id,
       peliculaId: peliculaId
@@ -235,10 +244,6 @@ this.listaSer.loadListas();
    * @param nombre
    */
   agregarLista(nombre: string){
-    this.listaSer.addLista({
-      id: -1,
-      nombre:nombre,
-      peliculas:[]
-    });
+    this.listaSer.addLista(nombre);
   }
 }

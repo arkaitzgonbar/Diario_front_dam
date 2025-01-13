@@ -34,16 +34,14 @@ export class CinesService {
     }
 
     if(cartelera?.fecha != this.datePipe.transform(new Date(), 'yyyy-MM-dd'))
-      this.api.get(environment.ruta_cine)
+      this.api.get<Cines>(environment.url + environment.ruta_cine)
         .subscribe({
-          next:(response) => {
-            this.todosCines.set(response);
-            this.updateCartelera(response);
-            localStorage.setItem('cartelera', JSON.stringify(response));
-            this.obtenerPeliculas();
-            console.log(response);
-          },
-          error:((e)=>console.log("ERROR " + e))
+          next:((data:Cines) =>{
+              this.todosCines.set(data.cines);
+              this.updateCartelera(data.cines);
+              localStorage.setItem('cartelera', JSON.stringify(data));
+          }),
+          error:((e)=>console.log(e))
         });
 
   }
@@ -55,6 +53,8 @@ export class CinesService {
    */
   public obtenerPeliculas(){
     const pelis: string[] =[];
+    console.log('this.cartelera()');
+    console.log(this.cartelera());
     this.cartelera().forEach(cine =>{
       cine.peliculas.forEach(pelicula =>{
         if(pelis.indexOf(pelicula.titulo) === -1)
@@ -65,6 +65,8 @@ export class CinesService {
   }
 
   public updateCartelera(cartelera: CineCart[]){
+    console.log('UPDATE');
+    console.log(cartelera);
     this.cartelera.set(cartelera);
   }
 

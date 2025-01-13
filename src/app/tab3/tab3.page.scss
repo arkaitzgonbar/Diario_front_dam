@@ -75,20 +75,10 @@
 }
 .right{
   width: 70%;
-  overflow: hidden;
+  height: 500px;
+  overflow: scroll;
 }
 
-.map-container{
-  /*width: 90%;*/
-  width: 800px;
-  height: 800px;
-  border-color: red;
-  margin: auto;
-}
-.map-content{
-  position: relative;
-
-}
 
 
 .buttons button :hover{

@@ -53,8 +53,14 @@
     }
   </div>
 
-  <!-- Botón para valorar la película -->
-  <ion-button (click)="valorarPelicula()">Valorar esta película</ion-button>
+  <!--Si la pelicula esta votada por el usuario el boton apararece en verde y se puede votar-->
+  <span *ngIf="estaVotado">
+    <ion-button color="danger" (click)="alertaVotado()">Valorar esta película</ion-button>
+  </span>
+  <span *ngIf="!estaVotado">
+    <ion-button color="success"  (click)="valorarPelicula()">Valorar esta película</ion-button>
+  </span>
+
 
   <!-- Botones dinámicos para clasificar la película -->
   @for (lista of listas(); track lista.id) {

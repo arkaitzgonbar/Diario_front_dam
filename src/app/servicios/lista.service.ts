@@ -13,6 +13,8 @@ export class ListaService {
 
   private listas = signal<Lista[]>([]);
   listas$ = toObservable(this.listas);
+
+  private listas2 = signal<Lista[]>([]);
   constructor() { }
 
   /**
@@ -30,8 +32,8 @@ export class ListaService {
    *
    * @param lista
    */
-  public addLista(lista: Lista){
-    this.api.post(environment.ruta_pelicula_lista, lista).subscribe({
+  public addLista(nombre: string){
+    this.api.post(environment.ruta_lista, nombre).subscribe({
       next:(response:Lista[]) => {
         this.listas.set([]);
         this.listas.set(response);
@@ -48,19 +50,21 @@ export class ListaService {
     const url = environment.ruta_lista + '/'
       + listaId;
     this.api.delete(url).subscribe({
-      next:(response:Lista[]) => {
-        this.listas.set([]);
-        this.listas.set(response);
+      next:() => {
+        console.log("Lista eliminada");
       },
       error:((e)=>console.log("ERROR"))
     });
+
+    this.actualizaListas();
+
   }
 
   /**
    * Añade una pelicula de una lista a otra
    * @param pl
    */
-  public addPeliculoToLista(pl: PeliculaLista){
+  /*public addPeliculoToLista(pl: PeliculaLista){
     this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
       next:(response:Lista[]) => {
         this.listas.set([]);
@@ -69,7 +73,23 @@ export class ListaService {
       error:((e)=>console.log("ERROR"))
     });
   }
+*/
 
+  public addPeliculoToLista(pl: PeliculaLista){
+    const token = localStorage.getItem('authToken');
+    this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
+      next: (response: Lista[]) => {
+        this.listas.set([]);
+        this.listas.set(response);
+        console.log("respuesta:");
+        console.log(response);
+      },
+      error: (e) => {
+        console.error('ERROR', e);
+        console.log(e.error.message || 'Unknown error');
+      }
+    });
+  }
   /**
    *
    * @param pl
@@ -77,13 +97,18 @@ export class ListaService {
   public deletePeliculaFromLista(pl:PeliculaLista){
     const url = environment.ruta_pelicula_lista + '/'
       + pl.listaId + '/' + pl.peliculaId;
+    console.log(url);
     this.api.delete(url).subscribe({
-      next:(response:Lista[]) => {
-        this.listas.set([]);
-        this.listas.set(response);
+      next:() => {
+        //this.listas.set([]);
+        //this.listas.set(response);
+        console.log("registro eliminado");
+
       },
       error:((e)=>console.log("ERROR"))
     });
+
+    this.actualizaListas();
   }
 
   /**
@@ -92,11 +117,31 @@ export class ListaService {
    */
   public getPeliculaLista(id: number):number[]{
     const numeros: number[] = [];
-     this.listas().filter(lista =>{
-       if(lista.peliculas.find(pelicula => pelicula.id === id))
-         numeros.push(lista.id);
-     }
+    this.listas().filter(lista =>{
+        if(lista.peliculas.find(pelicula => pelicula.id === id))
+          numeros.push(lista.id);
+      }
     );
     return numeros;
+  }
+
+  public actualizaListas(){
+    console.log("respuesta antes de actualizar");
+    console.log(this.listas);
+    const urlListas = environment.ruta_lista;
+    console.log(urlListas);
+    this.api.get(urlListas).subscribe({
+      next:(response:Lista[]) => {
+        this.listas.set([]);
+        console.log("respuesta despues de actualizar");
+        console.log(response);
+        this.listas.set(response);
+        console.log("listas despues de respuesta");
+        console.log(this.listas);
+
+
+      },
+      error:((e)=>console.log("ERROR"))
+    });
   }
 }

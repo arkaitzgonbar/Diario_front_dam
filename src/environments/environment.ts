@@ -4,16 +4,20 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:8000',
+  url: 'http://localhost:8080',
   //url: 'http://10.2.56.127:8000/',
-  ruta_peliculas: '/api/peliculas', //'/api/peliculas',
-  ruta_lista: 'assets/listas.json',//'/api/lista',
-  ruta_pelicula_lista: /*'/api/pelicula_lista'*/'/api/cartelera/pelisCartel',
-  ruta_usuarios: '/api/usuarios',
-  ruta_valoracion: 'assets/valoracion.json',//'/api/votos',
-  ruta_cine: 'assets/todos.json',//'/api/cine',
+  ruta_peliculas: '/api/peliculas',
+  ruta_lista: '/api/lista',
+  ruta_pelicula_lista: '/api/pelicula_lista',
+  ruta_valoracion: '/api/votos',
+  ruta_cine: '/api/cartelera',
   ruta_generos: '/api/peliculas/generos',
-  ruta_buscar: '/api/peliculas/buscar/genero_reparto_fecha_titulo'
+  ruta_buscar: '/api/peliculas/buscar/genero_reparto_fecha_titulo',
+  ruta_login: '/api/auth/login',
+  ruta_register: '/api/auth/register',
+  ruta_logout: '/api/auth/logout',
+  ruta_localizacion:'/api/cine/ubicacion',
+  peliculas_cartelera: '/api/cartelera/pelisCartel',
 };
 
 /*

@@ -15,8 +15,8 @@ export class ApiService {
    * Realiza la llamada a la api mediante el metodo get
    * @param url
    */
-  public get(url: string): Observable<any>{
-    return this.http.get(environment.url + url, {responseType: 'text'});
+  public get<T>(url: string): Observable<any>{
+    return this.http.get<T>(environment.url + url);
   }
 
   /**

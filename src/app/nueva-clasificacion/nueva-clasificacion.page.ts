@@ -20,11 +20,7 @@ export class NuevaClasificacionPage {
 
   agregarClasificacion() {
     if (this.nuevaLista.trim()) {
-      this.listasSer.addLista({
-        id:-1,
-        nombre: this.nuevaLista,
-        peliculas: []
-      })
+      this.listasSer.addLista(this.nuevaLista);
       //this.clasificacionService.agregarClasificacion(this.nuevaClasificacion);
       this.modalController.dismiss(this.nuevaLista);
     }
