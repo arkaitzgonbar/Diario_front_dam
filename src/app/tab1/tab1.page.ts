@@ -71,6 +71,8 @@ export class Tab1Page implements OnInit {
   cargaPeliculas() {
     this.isLoading = true;
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
+      console.log('PELIS');
+      console.log(data);
       this.peliculasFiltradas = data;
       this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
       console.log("Peliculas ordenadas");

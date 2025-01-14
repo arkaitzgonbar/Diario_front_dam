@@ -50,13 +50,15 @@ export class ListaService {
     const url = environment.ruta_lista + '/'
       + listaId;
     this.api.delete(url).subscribe({
-      next:() => {
+      next:(response) => {
+        this.listas.set([]);
+        this.listas.set(response);
         console.log("Lista eliminada");
       },
       error:((e)=>console.log("ERROR"))
     });
 
-    this.actualizaListas();
+    //this.actualizaListas();
 
   }
 
@@ -64,7 +66,7 @@ export class ListaService {
    * Añade una pelicula de una lista a otra
    * @param pl
    */
-  /*public addPeliculoToLista(pl: PeliculaLista){
+  public addPeliculoToLista(pl: PeliculaLista){
     this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
       next:(response:Lista[]) => {
         this.listas.set([]);
@@ -73,23 +75,7 @@ export class ListaService {
       error:((e)=>console.log("ERROR"))
     });
   }
-*/
 
-  public addPeliculoToLista(pl: PeliculaLista){
-    const token = localStorage.getItem('authToken');
-    this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
-      next: (response: Lista[]) => {
-        this.listas.set([]);
-        this.listas.set(response);
-        console.log("respuesta:");
-        console.log(response);
-      },
-      error: (e) => {
-        console.error('ERROR', e);
-        console.log(e.error.message || 'Unknown error');
-      }
-    });
-  }
   /**
    *
    * @param pl
@@ -97,18 +83,17 @@ export class ListaService {
   public deletePeliculaFromLista(pl:PeliculaLista){
     const url = environment.ruta_pelicula_lista + '/'
       + pl.listaId + '/' + pl.peliculaId;
-    console.log(url);
+
     this.api.delete(url).subscribe({
-      next:() => {
-        //this.listas.set([]);
-        //this.listas.set(response);
-        console.log("registro eliminado");
+      next:(response) => {
+        this.listas.set([]);
+        this.listas.set(response);
 
       },
       error:((e)=>console.log("ERROR"))
     });
 
-    this.actualizaListas();
+    //this.actualizaListas();
   }
 
   /**

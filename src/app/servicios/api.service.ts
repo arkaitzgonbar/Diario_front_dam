@@ -33,9 +33,9 @@ export class ApiService {
    * @param url
    * @param body
    */
-  public put(url:string, body: any): Observable<any>{
-    return this.http.put(environment.url + url, body);
-  }
+  // public put(url:string, body: any): Observable<any>{
+  //   return this.http.put(environment.url + url, body);
+  // }
 
   /**
    * Realiza la llamada a la api mediante el metodo delete

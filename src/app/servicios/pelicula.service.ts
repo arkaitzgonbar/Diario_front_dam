@@ -3,7 +3,7 @@ import {Pelicula, Valoracion} from "../mis-interfaces/pelicula";
 import {toObservable} from "@angular/core/rxjs-interop";
 import {ApiService} from "./api.service";
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import { AlertController } from '@ionic/angular';
 
 @Injectable({
@@ -23,8 +23,17 @@ export class PeliculaService {
    * Permite obtener todas las películas desde la api
    */
   getPeliculas(): Observable<Pelicula[]> {
-    return this.api.get<Pelicula[]>(environment.ruta_peliculas);
-    //return this.http.get<Pelicula[]>(this.apiUrl + "api/peliculas");
+    return this.api.get<Pelicula[]>(environment.ruta_peliculas).pipe(
+      map((value:Pelicula[]) => {
+        return value.map(peli =>{
+          if(!peli.imagen){
+            peli.imagen = 'assets/sin-imagen.png';
+          }
+          return peli;
+        })
+
+      })
+    );
   }
 
 
