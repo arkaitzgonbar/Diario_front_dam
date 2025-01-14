@@ -25,29 +25,15 @@ export class CinesService {
    * Carga la cartelera del almacenamiento local, sino es del mismo dia la pide de nuevo
    */
   public loadCartelera(){
-    const data = localStorage.getItem('cartelera');
-    let cartelera: any;
-
-    if(data){
-      cartelera = JSON.parse(data);
-      this.cartelera.set(JSON.parse(data).cines);
-    }
-
-    console.log("Ejecuta cartelera");
-    if(cartelera?.fecha != this.datePipe.transform(new Date(), 'yyyy-MM-dd'))
-      this.api.get<Cines>(environment.ruta_cine)
-        .subscribe({
-          next:((data:Cines) =>{
-              console.log("Cines");
-              console.log(data.cines);
-              this.todosCines.set(data.cines);
-              this.updateCartelera(data.cines);
-              
-              localStorage.setItem('cartelera', JSON.stringify(data));
-          }),
-          error:((e)=>console.log(e))
-        });
-
+    this.api.get<Cines>(environment.ruta_cine)
+      .subscribe({
+        next:((data:Cines) =>{
+          this.todosCines.set(data.cines);
+          this.updateCartelera(data.cines);
+          //localStorage.setItem('cartelera', JSON.stringify(data));
+        }),
+        error:((e)=>console.log(e))
+      });
   }
 
 
@@ -177,6 +163,7 @@ export class CinesService {
     )
     return finded ? true : false;
   }
+
 
 
 }

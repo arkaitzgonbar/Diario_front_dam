@@ -50,6 +50,7 @@ export class ModalPage implements  OnInit{
 
   ngOnInit() {
     this.listSer.loadListas();
+    this.cinesSer.loadCartelera();
     this.peliculaSer.loadValoracion(this.pelicula.id);
     this.enCartelera.set(
       this.cinesSer.findPeliculaById(this.pelicula.id)
@@ -134,11 +135,12 @@ export class ModalPage implements  OnInit{
    *
    */
   abrirGeolocalizacion() {
-    this.datosSer.updateData(this.pelicula);
+    this.datosSer.updateData(this.cinesSer.mostrarCinesByPelicula(this.pelicula.titulo));
     this.datosSer.updateMostrar(DataType.pelicula);
     this.cinesSer.updateCartelera(
       this.cinesSer.getCinesByPelicula(this.pelicula.titulo)
     );
+
     this.router.navigate(['/mi-app/cines-cercanos']);
     this.modalController.dismiss();
   }
@@ -162,17 +164,20 @@ export class ModalPage implements  OnInit{
    *
    */
   actualizarEstrellas() {
-    const estrellasLlenas = Math.round(this.valoracion()!.puntuacion);
-    this.stars = []; // Limpia el array actual de estrellas
+    if(this.valoracion()){
+      const estrellasLlenas = Math.round(this.valoracion()!.puntuacion);
+      this.stars = []; // Limpia el array actual de estrellas
 
-    // Bucle que llena el array con estrellas llenas hasta alcanzar la valoración media
-    for (let i = 0; i < 5; i++) {
-      if (i < estrellasLlenas) {
-        this.stars.push('star'); // Estrella llena
-      } else {
-        this.stars.push('star-outline'); // Estrella vacía
+      // Bucle que llena el array con estrellas llenas hasta alcanzar la valoración media
+      for (let i = 0; i < 5; i++) {
+        if (i < estrellasLlenas) {
+          this.stars.push('star'); // Estrella llena
+        } else {
+          this.stars.push('star-outline'); // Estrella vacía
+        }
       }
     }
+
   }
 
 
