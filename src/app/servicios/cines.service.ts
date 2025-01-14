@@ -33,12 +33,16 @@ export class CinesService {
       this.cartelera.set(JSON.parse(data).cines);
     }
 
+    console.log("Ejecuta cartelera");
     if(cartelera?.fecha != this.datePipe.transform(new Date(), 'yyyy-MM-dd'))
-      this.api.get<Cines>(environment.url + environment.ruta_cine)
+      this.api.get<Cines>(environment.ruta_cine)
         .subscribe({
           next:((data:Cines) =>{
+              console.log("Cines");
+              console.log(data.cines);
               this.todosCines.set(data.cines);
               this.updateCartelera(data.cines);
+              
               localStorage.setItem('cartelera', JSON.stringify(data));
           }),
           error:((e)=>console.log(e))

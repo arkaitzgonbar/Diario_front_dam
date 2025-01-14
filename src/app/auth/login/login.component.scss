@@ -1,0 +1,86 @@
+/*Estilos*/
+ion-content {
+    --background: black;
+    color: #ffffff;
+    padding: 1rem;
+  }
+  
+  label {
+    color: #fff;
+  }
+  
+  /* Formulario */
+  .auto-form-wrapper {
+    .form-group {
+      .input-group-append .input-group-text {
+        background-color: #444;
+        border: none;
+        color: #fff;
+        border-radius: 5px;
+        margin-left: -1px;
+      }
+    }
+  
+    .btn-primary {
+      background-color: #28a745; // Verde
+    }
+  
+    .btn-primary:hover {
+      background-color: #218838;
+    }
+  
+    .text-block.text-center {
+      font-size: 0.9em;
+      color: #ccc;
+      text-align: center;
+  
+      .text-black.text-small {
+        color: #00bcd4;
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 1200px) {
+    .col-lg-4.mx-auto {
+      max-width: 90%; 
+      padding: 0 1rem; 
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .col-lg-4.mx-auto {
+      max-width: 95%; 
+      padding: 0 1.5rem; 
+    }
+  
+    .text-center.mb-4 {
+      font-size: 1.5em; 
+    }
+  
+    .btn-primary {
+      font-size: 0.9em; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .col-lg-4.mx-auto {
+      max-width: 100%; 
+      padding: 0 2rem; 
+    }
+  
+    .text-center.mb-4 {
+      font-size: 1.2em; 
+    }
+  
+    .btn-primary {
+      font-size: 0.8em; 
+      padding: 8px;
+    }
+  }
+  

@@ -72,7 +72,7 @@ export class Tab2Page implements OnInit {
    * @param listaId
    */
   deletePeliculaFromLista(peliculaId: number) {
-    console.log("Lista seleccionada:")
+    console.log("Lista seleccionada:" + peliculaId);
     console.log(this.selectedlista());
     this.listaSer.deletePeliculaFromLista({
       listaId: this.selectedlista()!.id,

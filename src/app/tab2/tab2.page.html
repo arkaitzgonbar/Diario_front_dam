@@ -36,7 +36,7 @@
             <img [src]="pelicula.imagen" [alt]="pelicula.titulo" />
             <ion-card-content>
               <div class="movie-details">
-                <ion-card-title>{{ pelicula.titulo }}</ion-card-title>
+                <ion-card-title>{{ pelicula.titulo }}{{ pelicula.id }}</ion-card-title>
                 <div class="buttons-container">
                   <!-- Botón para eliminar la película-->
                   <ion-button fill="clear" color="danger" (click)="deletePeliculaFromLista(pelicula.id)">
