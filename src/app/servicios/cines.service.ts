@@ -1,3 +1,4 @@
+
 import {inject, Injectable, signal} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {CineCart, Cines, PeliculaCines} from "../mis-interfaces/cartelera";
@@ -43,8 +44,6 @@ export class CinesService {
    */
   public obtenerPeliculas(){
     const pelis: string[] =[];
-    console.log('this.cartelera()');
-    console.log(this.cartelera());
     this.cartelera().forEach(cine =>{
       cine.peliculas.forEach(pelicula =>{
         if(pelis.indexOf(pelicula.titulo) === -1)
@@ -55,8 +54,6 @@ export class CinesService {
   }
 
   public updateCartelera(cartelera: CineCart[]){
-    console.log('UPDATE');
-    console.log(cartelera);
     this.cartelera.set(cartelera);
   }
 
@@ -136,7 +133,7 @@ export class CinesService {
     if(word == '')
       return values;
     for (let element of this.peliculas()) {
-      if(element.toLowerCase().startsWith(word.toLowerCase())){
+      if(element.toLowerCase().includes(word.toLowerCase())){
         values.push(element);
         if(values.length >= 4)
           break
